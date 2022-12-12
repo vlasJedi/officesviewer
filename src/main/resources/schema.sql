@@ -1,0 +1,8 @@
+CREATE TABLE AppUser(
+  id INT AUTO_INCREMENT,
+  username VARCHAR(25) NOT NULL,
+  first_name VARCHAR(12) NOT NULL,
+  second_name VARCHAR(12) NOT NULL,
+  password VARCHAR(100) NOT NULL,
+  PRIMARY KEY(id)
+);

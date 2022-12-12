@@ -1,0 +1,2 @@
+INSERT INTO AppUser(username, first_name, second_name, password) VALUES ('admin', 'root', 'user', 'password');
+INSERT INTO AppUser(username, first_name, second_name, password) VALUES ('vlasJedi', 'Vlas', 'Dielov', 'password');
