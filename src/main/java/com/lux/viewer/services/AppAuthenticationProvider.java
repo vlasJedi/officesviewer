@@ -32,7 +32,7 @@ public class AppAuthenticationProvider implements AuthenticationProvider {
         if (!userDetails.getPassword().equals(inputPassword)) throw new BadCredentialsException("Bad credentials");
         // new to re-create authentication as token which will be used in SecurityContextHolder
         return new UsernamePasswordAuthenticationToken(username,
-                inputPassword, Collections.emptyList());
+                inputPassword, userDetails.getAuthorities());
     }
 
     @Override

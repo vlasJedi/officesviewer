@@ -40,4 +40,12 @@ public class Role {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public List<AppUser> getAppUserList() {
+        return appUserList;
+    }
+
+    public void setAppUserList(List<AppUser> appUserList) {
+        this.appUserList = appUserList;
+    }
 }

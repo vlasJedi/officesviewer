@@ -1,15 +1,12 @@
 package com.lux.viewer.config;
 
-import com.lux.viewer.services.AppUserService;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -24,21 +21,17 @@ public class SecurityConfig {
     // including authorization setup
     public SecurityFilterChain securityFilterChain(@NotNull HttpSecurity httpSecurity) throws Exception {
         // building from most specific down to most general
-        httpSecurity
-                .authorizeHttpRequests((requests) -> requests
-//                        .requestMatchers("/*")
-//                        .authenticated()
-//                        .permitAll()
-                        // require any request to be allowed only for success auth
-                        .anyRequest()
-                        .authenticated()
-                )
-                // configure
-                .formLogin(Customizer.withDefaults())
-                .logout(LogoutConfigurer::permitAll);
+        httpSecurity.authorizeHttpRequests((requests) -> requests
+            .requestMatchers("/admin")
+            .hasAuthority("ADMIN")
+            .anyRequest()
+            .authenticated()
+            )
+            // configure
+            .formLogin(Customizer.withDefaults())
+            .logout(LogoutConfigurer::permitAll);
 
         return httpSecurity.build();
-
     }
 
     @Bean

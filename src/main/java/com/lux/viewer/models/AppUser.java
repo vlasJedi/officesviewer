@@ -2,6 +2,7 @@ package com.lux.viewer.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,7 +21,8 @@ public class AppUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToMany
+    // can be performance hit, but not for several roles
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name="APPUSER_ROLE",
             joinColumns = @JoinColumn(name = "appuser_id"),
@@ -78,5 +80,13 @@ public class AppUser {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 }
