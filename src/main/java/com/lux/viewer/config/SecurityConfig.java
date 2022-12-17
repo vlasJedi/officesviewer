@@ -3,7 +3,6 @@ package com.lux.viewer.config;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
@@ -24,13 +23,17 @@ public class SecurityConfig {
         httpSecurity.authorizeHttpRequests((requests) -> requests
             .requestMatchers("/admin")
             .hasAuthority("ADMIN")
-            .anyRequest()
+            .requestMatchers("/api")
             .authenticated()
+            .requestMatchers("/*")
+            .permitAll()
+            //.and()
             )
-            // configure
-            .formLogin(Customizer.withDefaults())
+            .formLogin().loginPage("/login")
+            .and()
             .logout(LogoutConfigurer::permitAll);
 
+        httpSecurity.httpBasic();
         return httpSecurity.build();
     }
 
