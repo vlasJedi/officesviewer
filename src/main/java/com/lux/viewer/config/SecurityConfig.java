@@ -1,14 +1,17 @@
 package com.lux.viewer.config;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
+import java.security.SecureRandom;
 
 @Configuration
 @EnableWebSecurity
@@ -27,18 +30,31 @@ public class SecurityConfig {
             .authenticated()
             .requestMatchers("/*")
             .permitAll()
-            //.and()
             )
+            // if is enabled httpBasic via Authorization Basic header
+            // then this formLogin consumes a POST auth requests coming to /login URL
+            // therefore works two auth mechanisms: HTTP Basic vs Session based POST /login
+            // need to choose one of them
             .formLogin().loginPage("/login")
+            // prevent redirects from spring so this is done by client code
+            .successHandler((request, response, authentication) -> {
+                response.setStatus(HttpServletResponse.SC_OK);
+            })
+            // prevent redirects from spring so this is done by client code
+            .failureHandler(((request, response, exception) -> {
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            }))
             .and()
-            .logout(LogoutConfigurer::permitAll);
-
-        httpSecurity.httpBasic();
+            .logout(LogoutConfigurer::permitAll)
+            // for production need to be enabled to prevent session leaks
+            .csrf().disable();
+        // if any ssl needs to be added
+        //.requiresChannel((requiresChannel) -> requiresChannel.anyRequest().requiresSecure());
         return httpSecurity.build();
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
+        return new BCryptPasswordEncoder(10, new SecureRandom());
     }
 }

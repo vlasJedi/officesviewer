@@ -3,6 +3,7 @@ package com.lux.viewer.controllers;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -17,6 +18,13 @@ public class LoginController {
         return modelAndView;
     }
 
+    @PostMapping("/login")
+    public String doLogin() {
+        ObjectNode node = JsonNodeFactory.instance.objectNode();
+        node.put("auth", true);
+        return node.toString();
+    }
+
     @GetMapping("/home")
     public ModelAndView getLogin() {
         return getIndex();
@@ -24,8 +32,14 @@ public class LoginController {
 
     @GetMapping("/user")
     public String isAuthenticated(Principal auth) {
+        if (auth == null) return "";
         ObjectNode node = JsonNodeFactory.instance.objectNode();
         node.put("username", auth.getName());
         return node.toString();
+    }
+
+    @GetMapping("/")
+    public ModelAndView getMain() {
+        return getIndex();
     }
 }

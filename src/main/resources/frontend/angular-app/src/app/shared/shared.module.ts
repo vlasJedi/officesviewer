@@ -4,16 +4,19 @@ import { LoginPageComponent } from './components/login-page/login-page.component
 import { ReactiveFormsModule } from '@angular/forms';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { RouterLink } from "@angular/router";
+import { UserPanelComponent } from './components/user-panel/user-panel.component';
 
 
 
 @NgModule({
   declarations: [
     LoginPageComponent,
-    NavigationComponent
+    NavigationComponent,
+    UserPanelComponent
   ],
   exports: [
-    NavigationComponent
+    NavigationComponent,
+    UserPanelComponent
   ],
   imports: [
     CommonModule,
