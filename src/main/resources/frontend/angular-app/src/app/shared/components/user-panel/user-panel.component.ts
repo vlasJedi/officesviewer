@@ -19,4 +19,8 @@ export class UserPanelComponent {
     })
   }
 
+  onLogoutClick() {
+
+  }
+
 }

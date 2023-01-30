@@ -2,7 +2,13 @@
   display: block;
 }
 
-.app-user-container {
+header {
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
 }
+
+.app-user-container {
+  padding-top: 15px;
+}
+
+//app-nav-container

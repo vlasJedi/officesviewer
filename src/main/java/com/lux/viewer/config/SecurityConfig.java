@@ -47,7 +47,9 @@ public class SecurityConfig {
             .and()
             .logout(LogoutConfigurer::permitAll)
             // for production need to be enabled to prevent session leaks
-            .csrf().disable();
+            .csrf().disable()
+            // only for DEV env, for prod better to remove
+            .headers().cacheControl().disable();
         // if any ssl needs to be added
         //.requiresChannel((requiresChannel) -> requiresChannel.anyRequest().requiresSecure());
         return httpSecurity.build();

@@ -1,4 +1,11 @@
-<div>
-  <div *ngIf="username; else loggedOut">User <span>{{ username }}</span></div>
+<div class="app-user-panel-container">
+  <div *ngIf="username; else loggedOut">
+    <div>
+      Logged in as <span>{{ username }}</span>
+    </div>
+    <div class="logout-btn-container">
+      <input class="logout-btn" type="button" id="logout-btn" value="Logout" (click)="onLogoutClick()"/>
+    </div>
+  </div>
   <ng-template #loggedOut>You are not logged in</ng-template>
 </div>

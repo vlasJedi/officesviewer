@@ -13,5 +13,4 @@ logging.level.org.springframework.web=debug
 logging.level.org.springframework.security=debug
 logging.level.org.hibernate=debug
 
-# for DEV env, for prod should be removed
-spring.web.resources.static-locations="file:///C:/repos/officesviewer/public/"
+

@@ -55,6 +55,10 @@
 			<version>RELEASE</version>
 			<scope>compile</scope>
 		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-devtools</artifactId>-->
+<!--		</dependency>-->
 	</dependencies>
 
 	<build>
@@ -80,10 +84,6 @@
 						<argument>build</argument>
 					</arguments>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
