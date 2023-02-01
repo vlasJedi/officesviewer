@@ -1,0 +1,2 @@
+docker build -f Dockerfile -t offices-viewer:latest .
+docker run -it --rm -p 8080:8080 --name offices-viewer-container offices-viewer
