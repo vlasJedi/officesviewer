@@ -18,4 +18,8 @@ export class NavigationComponent {
       }
     ];
   }
+
+  trackByFn(index: number, item: {url: string, displayName: string}) {
+    return item.url;
+  }
 }

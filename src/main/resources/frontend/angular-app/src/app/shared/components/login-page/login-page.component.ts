@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {AuthenticationService} from "../../../core/services/authentication-service/authentication.service";
-import {catchError, first} from "rxjs";
 import {Router} from "@angular/router";
 
 @Component({
@@ -26,12 +25,16 @@ export class LoginPageComponent {
     if (!form.username || !form.password) return;
     this.authenticationService
       .authenticate(form.username, form.password)
-      .pipe(first(), catchError(() => {
-        window.alert("Login failed");
-        throw new Error("Login failed");
-      }))
-      .subscribe(() => {
-        this.router.navigateByUrl("/home");
+      .subscribe({
+        next: () => {
+          this.router.navigateByUrl("/home")
+            .catch(() => {
+              window.alert("Redirect for success authentication failed");
+            });
+        },
+        error: () => {
+          window.alert("Login failed");
+        }
       });
   }
 }

@@ -33,7 +33,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -55,37 +54,22 @@
 			<version>RELEASE</version>
 			<scope>compile</scope>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-devtools</artifactId>-->
-<!--		</dependency>-->
 	</dependencies>
 
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<version>3.1.0</version>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>${project.parent.version}</version>
 				<executions>
 					<execution>
-						<phase>validate</phase>
-						<goals>
-							<goal>exec</goal>
-						</goals>
+						<configuration>
+							<mainClass>com.lux.viewer.ViewerApplication</mainClass>
+						</configuration>
 					</execution>
 				</executions>
-				<configuration>
-					<executable>ng</executable>
-					<workingDirectory>
-						src/main/resources/frontend/angular-app
-					</workingDirectory>
-					<arguments>
-						<argument>build</argument>
-					</arguments>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-
 </project>

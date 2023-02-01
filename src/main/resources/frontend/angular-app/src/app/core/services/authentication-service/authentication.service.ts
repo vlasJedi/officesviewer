@@ -28,7 +28,6 @@ export class AuthenticationService {
   getCurrentAuthUser(): Observable<string> {
     return this.httpClient.get<{username: string}>("/user")
       .pipe(
-        first(),
         catchError(() => of({username: ""})),
         map((user: {username: string}) => user.username),
         tap((value) => {
@@ -43,7 +42,6 @@ export class AuthenticationService {
     const headers = new HttpHeaders({"Content-Type": "application/x-www-form-urlencoded"});
     return this.httpClient.post("/login", urlParams.toString(), {headers})
       .pipe(
-        first(),
         map(() => username),
         tap((value) => {
           this.authSubject.next(value);
