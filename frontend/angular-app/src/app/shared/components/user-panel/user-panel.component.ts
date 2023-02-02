@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {Observable} from "rxjs";
 import {AuthenticationService} from "../../../core/services/authentication-service/authentication.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-user-panel',
@@ -12,7 +13,10 @@ export class UserPanelComponent {
   username: string = "";
   authUsername$?: Observable<string>;
 
-  constructor(private readonly authService: AuthenticationService) {
+  constructor(
+    private readonly authService: AuthenticationService,
+    private readonly router: Router
+  ) {
     this.authUsername$ = authService.getCurrentUser$();
     this.authUsername$.subscribe((username) => {
       this.username = username;
@@ -20,7 +24,14 @@ export class UserPanelComponent {
   }
 
   onLogoutClick() {
-
+    this.authService.logout().subscribe({
+      next: () => {
+        this.router.navigateByUrl("/login");
+      },
+      error: (err) => {
+        window.alert("Logout for some reason failed " + err.toString());
+      }
+    });
   }
 
 }

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {BehaviorSubject, catchError, first, map, Observable, of, tap} from "rxjs";
+import {BehaviorSubject, catchError, map, Observable, of, tap} from "rxjs";
 
 @Injectable({
   // provided as singleton in a root module
@@ -48,7 +48,13 @@ export class AuthenticationService {
         }));
   }
 
-  logout() {
-
+  logout(): Observable<any> {
+    return this.httpClient
+      .post("/logout", undefined, {responseType: "text"})
+      .pipe(
+        tap(() => {
+          this.authSubject.next("");
+        })
+      );
   }
 }

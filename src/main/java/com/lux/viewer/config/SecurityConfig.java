@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -45,7 +44,9 @@ public class SecurityConfig {
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             }))
             .and()
-            .logout(LogoutConfigurer::permitAll)
+            .logout((logoutConfigurer) -> logoutConfigurer.logoutSuccessHandler(((request, response, authentication) -> {
+                response.setStatus(HttpServletResponse.SC_OK);
+            })))
             // for production need to be enabled to prevent session leaks
             .csrf().disable()
             // only for DEV env, for prod better to remove
