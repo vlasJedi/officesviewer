@@ -3,10 +3,9 @@ ARG JAR_FILE=viewer-0.0.1-SNAPSHOT.jar
 FROM node:18 as ng-stage
 WORKDIR /usr/src/app
 COPY . .
-WORKDIR ./src/main/resources/frontend/angular-app
+WORKDIR ./frontend/angular-app
 RUN npm install
 RUN npm run build
-WORKDIR ../../public
 
 FROM maven:3.8.7 as mvn-stage
 WORKDIR /usr/src/app
