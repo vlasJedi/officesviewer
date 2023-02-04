@@ -1,5 +1,7 @@
 package com.lux.viewer.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -27,6 +29,8 @@ public class AppUser {
             name="APPUSER_ROLE",
             joinColumns = @JoinColumn(name = "appuser_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
+    // resolve circular ref, so user still contain a ref to roles, but roles does not have ref to user
+    @JsonManagedReference
     private List<Role> roles;
 
     // may need to impl column validation
@@ -40,6 +44,7 @@ public class AppUser {
     private String secondName;
 
     @Column
+    @JsonIgnore
     private String password;
 
     public long getId() {

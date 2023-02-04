@@ -12,3 +12,11 @@
   width: 100%;
   z-index: -1;
 }
+
+.ol-zoom {
+  position: absolute;
+  bottom: 1em;
+  top: auto !important;
+  right: 0.5em;
+  left: auto !important;
+}

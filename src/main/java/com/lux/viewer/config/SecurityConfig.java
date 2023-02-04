@@ -23,11 +23,12 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(@NotNull HttpSecurity httpSecurity) throws Exception {
         // building from most specific down to most general
         httpSecurity.authorizeHttpRequests((requests) -> requests
-            .requestMatchers("/admin")
+            // pay attention that ** and * are different, * will work only one segment of urlpath, ** is recursive
+            .requestMatchers("/admin/**")
             .hasAuthority("ADMIN")
-            .requestMatchers("/api")
+            .requestMatchers("/api/**", "/users/**")
             .authenticated()
-            .requestMatchers("/*")
+            .requestMatchers("/**")
             .permitAll()
             )
             // if is enabled httpBasic via Authorization Basic header

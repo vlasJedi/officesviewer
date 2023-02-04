@@ -23,6 +23,10 @@ export class UserPanelComponent {
     })
   }
 
+  onDetailsClick() {
+
+  }
+
   onLogoutClick() {
     this.authService.logout().subscribe({
       next: () => {

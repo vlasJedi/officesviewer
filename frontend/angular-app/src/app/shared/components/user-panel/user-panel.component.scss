@@ -2,11 +2,28 @@
   font-weight: bold;
 }
 
-.logout-btn-container {
-  padding-top: 10px;
+.user-panel-items {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
 }
 
-.logout-btn {
-  float: right;
-  width: 75px;
+.user-panel-controls {
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+}
+
+.user-panel-username-container {
+  padding-right: 5px;
+}
+
+.logout-btn-container {
+  padding-top: 10px;
+  padding-right: 5px;
+}
+
+.details-btn-container {
+  padding-top: 10px;
+  padding-right: 5px;
 }

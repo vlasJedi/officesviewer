@@ -1,10 +1,15 @@
 <div class="app-user-panel-container">
-  <div *ngIf="username; else loggedOut">
-    <div>
+  <div *ngIf="username; else loggedOut" class="user-panel-items">
+    <div class="user-panel-username-container">
       Logged in as <span>{{ username }}</span>
     </div>
-    <div class="logout-btn-container">
-      <input class="logout-btn" type="button" id="logout-btn" value="Logout" (click)="onLogoutClick()"/>
+    <div class="user-panel-controls">
+      <div class="details-btn-container">
+        <input class="details-btn" type="button" id="details-btn" value="Details" (click)="onDetailsClick()"/>
+      </div>
+      <div class="logout-btn-container">
+        <input class="logout-btn" type="button" id="logout-btn" value="Logout" (click)="onLogoutClick()"/>
+      </div>
     </div>
   </div>
   <ng-template #loggedOut>You are not logged in</ng-template>

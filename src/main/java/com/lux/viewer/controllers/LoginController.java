@@ -33,6 +33,7 @@ public class LoginController {
     @GetMapping("/user")
     public String isAuthenticated(Principal auth) {
         if (auth == null) return "";
+        //AppUserDetails user = (AppUserDetails) userDetailsService.loadUserByUsername(auth.getName());
         ObjectNode node = JsonNodeFactory.instance.objectNode();
         node.put("username", auth.getName());
         return node.toString();
