@@ -23,13 +23,15 @@ public class AppUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    // can be performance hit, but not for several roles
-    @ManyToMany(fetch = FetchType.EAGER)
+    // can be performance hit with EAGER, but not for several roles
+    // rewritten back to LAZY
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name="APPUSER_ROLE",
             joinColumns = @JoinColumn(name = "appuser_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     // resolve circular ref, so user still contain a ref to roles, but roles does not have ref to user
+    // during serialization
     @JsonManagedReference
     private List<Role> roles;
 
