@@ -1,6 +1,18 @@
 package com.lux.viewer.jpahibernate.models;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Access;
+import jakarta.persistence.AccessType;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -26,42 +38,54 @@ import java.util.Set;
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 
 public class Item {
-    // bidirectional ref
-    @Access(AccessType.FIELD)
-    @OneToMany
-    protected Set<Bid> bids = new HashSet<>();
-
-    // jpa validation
-    private String name;
-
-    // datetime should be in future
-    protected Date auctionEnd;
-
+    // by default now hibernate will try access all fields
+    // not by getter methods
     @Id
     @GeneratedValue(generator = "ID_GENERATOR")
     private Long id;
+    // bidirectional ref
+    // this is just for example as it is already field due to @id place
+    @Access(AccessType.FIELD)
+    @OneToMany(
+            mappedBy = "item",
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE}
+    )
+    @NotNull
+    protected Set<Bid> bids = new HashSet<>();
 
-    public Long getId() {
-        return id;
-    }
-
-    @Future
-    public Date getAuctionEnd() {
-        return auctionEnd;
-    }
-
-    public void setAuctionEnd(Date auctionEnd) {
-        this.auctionEnd = auctionEnd;
-    }
-
+    // jpa validation
     @NotNull
     @Size(
             min = 2,
             max = 255,
             message = "Name is required, maximum 255 characters."
     )
-    public String getName() {
-        return name;
+    private String name;
+
+    // datetime should be in future
+    @Future
+    @NotNull
+    protected Date auctionEnd;
+
+    @ElementCollection
+    @CollectionTable(name = "IMAGE")
+    @AttributeOverride(
+            name = "filename",
+            column = @Column(name = "FNAME", nullable = false)
+    )
+    protected Set<Image> images = new HashSet<Image>();
+
+    public Long getId() {
+        return id;
+    }
+
+    public Date getAuctionEnd() {
+        return auctionEnd;
+    }
+
+    public void setAuctionEnd(Date auctionEnd) {
+        this.auctionEnd = auctionEnd;
     }
 
     public void setName(String name) {
@@ -74,6 +98,7 @@ public class Item {
     public Set<Bid> getBids() {
         return Collections.unmodifiableSet(bids);
     }
+
     // make it private, so it is not possible to change it in arbitrary
     // hibernate will access it directly
     // relationship management!
