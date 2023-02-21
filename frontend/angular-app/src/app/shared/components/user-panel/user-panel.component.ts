@@ -24,7 +24,7 @@ export class UserPanelComponent {
   }
 
   onDetailsClick() {
-
+    alert("Not yet implemented");
   }
 
   onLogoutClick() {

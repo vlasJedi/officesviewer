@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { RouterLink } from "@angular/router";
 import { UserPanelComponent } from './components/user-panel/user-panel.component';
+import { ToolsPanelComponent } from './components/tools-panel/tools-panel.component';
 
 
 
@@ -12,11 +13,13 @@ import { UserPanelComponent } from './components/user-panel/user-panel.component
   declarations: [
     LoginPageComponent,
     NavigationComponent,
-    UserPanelComponent
+    UserPanelComponent,
+    ToolsPanelComponent
   ],
   exports: [
     NavigationComponent,
-    UserPanelComponent
+    UserPanelComponent,
+    ToolsPanelComponent
   ],
   imports: [
     CommonModule,
