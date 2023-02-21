@@ -1,17 +1,16 @@
 import {AfterViewInit, Component, ViewEncapsulation} from '@angular/core';
-
-import Map from 'ol/Map.js';
-import OSM from 'ol/source/OSM.js';
-import TileLayer from 'ol/layer/Tile.js';
-import View from 'ol/View.js';
+import Map from "ol/Map";
+import TileLayer from "ol/layer/Tile";
+import OSM from "ol/source/OSM";
+import View from "ol/View";
 
 @Component({
-  selector: 'app-home-page',
-  templateUrl: './home-page.component.html',
-  styleUrls: ['./home-page.component.scss'],
+  selector: 'app-map-container',
+  templateUrl: './map-container.component.html',
+  styleUrls: ['./map-container.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class HomePageComponent implements AfterViewInit {
+export class MapContainerComponent implements AfterViewInit {
   private map?: Map;
 
   ngAfterViewInit() {

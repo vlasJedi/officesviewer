@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LoginPageComponent } from './components/login-page/login-page.component';
+// import { LoginPageComponent } from './components/login-page/login-page.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { RouterLink } from "@angular/router";
@@ -11,7 +11,7 @@ import { ToolsPanelComponent } from './components/tools-panel/tools-panel.compon
 
 @NgModule({
   declarations: [
-    LoginPageComponent,
+    //LoginPageComponent,
     NavigationComponent,
     UserPanelComponent,
     ToolsPanelComponent

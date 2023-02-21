@@ -1,0 +1,30 @@
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.ol-zoom {
+  position: absolute;
+  bottom: 1em;
+  top: auto !important;
+  right: 0.5em;
+  left: auto !important;
+}
+
+.ol-rotate {
+  position: absolute;
+  bottom: 3em;
+  top: auto !important;
+  right: 0.5em;
+  left: auto !important;
+}
+
+.ol-attribution {
+  position: absolute;
+  bottom: 1em;
+  top: auto !important;
+  left: 0.5em;
+  right: auto !important;
+}

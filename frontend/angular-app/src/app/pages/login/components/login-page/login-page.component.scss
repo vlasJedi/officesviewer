@@ -1,12 +1,11 @@
-:host{
+.login-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
   display: flex;
   align-items: center;
-}
-
-.form-login {
-  display: inline-block;
-  margin-left: auto;
-  margin-right: auto;
+  justify-content: center;
 }
 
 .form-login-control {
