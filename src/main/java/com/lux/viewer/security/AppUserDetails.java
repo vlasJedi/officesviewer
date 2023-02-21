@@ -18,7 +18,8 @@ public class AppUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return appUser.getRoles().stream().map((role) -> new SimpleGrantedAuthority(role.getRoleName()))
+        return appUser.getRoles().stream()
+                .map((role) -> new SimpleGrantedAuthority(role.getRoleName().toSpringRole()))
                 .toList();
     }
 

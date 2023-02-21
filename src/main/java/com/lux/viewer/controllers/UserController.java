@@ -1,6 +1,7 @@
 package com.lux.viewer.controllers;
 
 import com.lux.viewer.models.AppUser;
+import com.lux.viewer.models.RoleEnum;
 import com.lux.viewer.security.AppUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -32,7 +33,7 @@ public class UserController {
                     .getUser();
         }
         boolean isAdminRole = authentication.getAuthorities().stream()
-                .anyMatch(role -> role.getAuthority().equals("ADMIN"));
+                .anyMatch(role -> role.getAuthority().equals(RoleEnum.ADMIN.toSpringRole()));
         if (!isAdminRole) {
             throw new AccessDeniedException(String.format("Forbidden to get info for the user: %s", username));
         }

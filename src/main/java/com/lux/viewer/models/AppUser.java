@@ -20,6 +20,8 @@ import java.util.List;
 public class AppUser {
     @Id
     // db provider uses its own impl for sequence
+    // identity has drawback that for insert it provides id only after action
+    // but sequence - provides upon object creation
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 

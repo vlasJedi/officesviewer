@@ -42,6 +42,7 @@ public class AppUserService implements UserDetailsService {
         if (userOpt.isEmpty()) throw new UsernameNotFoundException("Username not found");
         // force fetch of roles as they are lazy loaded and currently is opened transaction
         // so entity of user is NOT in detached state
+        // REFACTOR FOR SPRING APPROACH
         userOpt.get().getRoles().size();
         return new AppUserDetails(userOpt.get());
     }

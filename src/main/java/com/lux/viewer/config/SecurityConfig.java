@@ -1,5 +1,6 @@
 package com.lux.viewer.config;
 
+import com.lux.viewer.models.RoleEnum;
 import jakarta.servlet.http.HttpServletResponse;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Bean;
@@ -25,7 +26,7 @@ public class SecurityConfig {
         httpSecurity.authorizeHttpRequests((requests) -> requests
             // pay attention that ** and * are different, * will work only one segment of urlpath, ** is recursive
             .requestMatchers("/admin/**")
-            .hasAuthority("ADMIN")
+            .hasRole(RoleEnum.ADMIN.toString())
             .requestMatchers("/api/**", "/users/**")
             .authenticated()
             .requestMatchers("/**")

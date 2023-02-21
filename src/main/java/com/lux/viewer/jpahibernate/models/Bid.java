@@ -32,7 +32,7 @@ public class Bid {
     // make it package visible to protect from not correct setting
     // relationship management!
     // this method can be called only from Bid
-    void setItem(Item item) {
+    public void setItem(Item item) {
         this.item = item;
     }
 

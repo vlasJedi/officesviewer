@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 public class StoreUser {
     @Id
     @GeneratedValue(generator = "ID_GENERATOR")
+    // @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     public Long getId() {
@@ -30,6 +31,19 @@ public class StoreUser {
                     column = @Column(name = "BILLING_CITY"))
     })
     protected Address billingAddress;
+
+//    public StoreUserDetails getStoreUserDetails() {
+//        return storeUserDetails;
+//    }
+//
+//    public void setStoreUserDetails(StoreUserDetails storeUserDetails) {
+//        this.storeUserDetails = storeUserDetails;
+//    }
+//
+//    @OneToOne(mappedBy = "storeUser",fetch = FetchType.LAZY)
+//    // @PrimaryKeyJoinColumn
+//    private StoreUserDetails storeUserDetails;
+
     public Address getBillingAddress() {
         return billingAddress;
     }

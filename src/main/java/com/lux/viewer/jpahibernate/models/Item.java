@@ -2,20 +2,12 @@ package com.lux.viewer.jpahibernate.models;
 
 import jakarta.persistence.Access;
 import jakarta.persistence.AccessType;
-import jakarta.persistence.AttributeOverride;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.CollectionTable;
-import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
-import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import java.util.Collections;
@@ -27,10 +19,10 @@ import java.util.Set;
 // has list of associated bids
 @Entity
 // can be used from spring's repo due to prefix Item.
-@NamedQuery(
-        name = "Item.findItemsOrderByName",
-        query = "select i from Item i order by i.name asc"
-)
+//@NamedQuery(
+//        name = "Item.findItemsWithRelatedBids",
+//        query = "select i from Item i left join fetch i.bids"
+//)
 //@NamedQuery(
 //        name = "Item.findItemBuyNowPriceGreaterThan",
 //        query = "select i from Item i where i.buyNowPrice > :price"
@@ -48,33 +40,33 @@ public class Item {
     @Access(AccessType.FIELD)
     @OneToMany(
             mappedBy = "item",
-            fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST, CascadeType.REMOVE}
+            fetch = FetchType.LAZY//,
+            // cascade = {CascadeType.PERSIST, CascadeType.REMOVE}
     )
     @NotNull
     protected Set<Bid> bids = new HashSet<>();
 
     // jpa validation
-    @NotNull
-    @Size(
-            min = 2,
-            max = 255,
-            message = "Name is required, maximum 255 characters."
-    )
+//    @NotNull
+//    @Size(
+//            min = 2,
+//            max = 255,
+//            message = "Name is required, maximum 255 characters."
+//    )
     private String name;
 
     // datetime should be in future
-    @Future
-    @NotNull
+//    @Future
+//    @NotNull
     protected Date auctionEnd;
 
-    @ElementCollection
-    @CollectionTable(name = "IMAGE")
-    @AttributeOverride(
-            name = "filename",
-            column = @Column(name = "FNAME", nullable = false)
-    )
-    protected Set<Image> images = new HashSet<Image>();
+//    @ElementCollection
+//    @CollectionTable(name = "IMAGE")
+//    @AttributeOverride(
+//            name = "filename",
+//            column = @Column(name = "FNAME", nullable = false)
+//    )
+//    protected Set<Image> images = new HashSet<Image>();
 
     public Long getId() {
         return id;
@@ -102,18 +94,18 @@ public class Item {
     // make it private, so it is not possible to change it in arbitrary
     // hibernate will access it directly
     // relationship management!
-    private void setBids(Set<Bid> bids) {
+    public void setBids(Set<Bid> bids) {
         this.bids = bids;
     }
 
-    public void addBid(Bid bid) {
-        // defensive behavior to do not allow intermediate changes
-        if (bid == null)
-            throw new NullPointerException("Can't add null Bid");
-        if (bid.getItem() != null)
-            throw new IllegalStateException("Bid is already assigned to an Item");
-        // this should be atomic or rollback
-        getBids().add(bid);
-        bid.setItem(this);
-    }
+//    public void addBid(Bid bid) {
+//        // defensive behavior to do not allow intermediate changes
+//        if (bid == null)
+//            throw new NullPointerException("Can't add null Bid");
+//        if (bid.getItem() != null)
+//            throw new IllegalStateException("Bid is already assigned to an Item");
+//        // this should be atomic or rollback
+//        getBids().add(bid);
+//        bid.setItem(this);
+//    }
 }

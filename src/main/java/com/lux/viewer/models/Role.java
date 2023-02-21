@@ -3,6 +3,8 @@ package com.lux.viewer.models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -26,13 +28,15 @@ public class Role {
     private List<AppUser> appUserList;
 
     @Column(name = "role_name", unique = true, nullable = false)
-    private String roleName;
+    // tries to use string representation instead of indexes
+    @Enumerated(EnumType.STRING)
+    private RoleEnum roleName;
 
-    public String getRoleName() {
+    public RoleEnum getRoleName() {
         return roleName;
     }
 
-    public void setRoleName(String roleName) {
+    public void setRoleName(RoleEnum roleName) {
         this.roleName = roleName;
     }
 
