@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ToolsPanelComponent } from './tools-panel.component';
+import { MapToolboxComponent } from './map-toolbox.component';
 
-describe('ToolsPanelComponent', () => {
-  let component: ToolsPanelComponent;
-  let fixture: ComponentFixture<ToolsPanelComponent>;
+describe('MapToolboxComponent', () => {
+  let component: MapToolboxComponent;
+  let fixture: ComponentFixture<MapToolboxComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ToolsPanelComponent ]
+      declarations: [ MapToolboxComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ToolsPanelComponent);
+    fixture = TestBed.createComponent(MapToolboxComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

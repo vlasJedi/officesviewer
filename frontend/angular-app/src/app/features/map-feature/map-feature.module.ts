@@ -1,17 +1,20 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MapContainerComponent} from './components/map-container/map-container.component';
+import {MapToolboxComponent} from './components/map-toolbox/map-toolbox.component';
 
 
 @NgModule({
   declarations: [
-    MapContainerComponent
+    MapContainerComponent,
+    MapToolboxComponent
   ],
   imports: [
     CommonModule
   ],
   exports: [
-    MapContainerComponent
+    MapContainerComponent,
+    MapToolboxComponent
   ]
 })
 export class MapFeatureModule { }
