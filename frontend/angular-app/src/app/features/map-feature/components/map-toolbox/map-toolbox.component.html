@@ -1,3 +1,5 @@
 <div>
-  <button (click)="addLocation()">Add location</button>
+  <button *ngFor="let toolName of getTools()"
+          (click)="addLocation()"
+          [ngClass]="getStyle(toolName)">{{ toolName }}</button>
 </div>

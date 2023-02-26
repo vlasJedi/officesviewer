@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
-import {MapToolsService} from "../../services/map-tools-service/map-tools.service";
+import {Component} from '@angular/core';
+import {MapToolsService} from "src/app/features/map-feature/services/map-tools-service/map-tools.service";
+import {Feature} from "ol";
+import {Geometry} from "ol/geom";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-map-toolbox',
@@ -7,10 +10,34 @@ import {MapToolsService} from "../../services/map-tools-service/map-tools.servic
   styleUrls: ['./map-toolbox.component.scss']
 })
 export class MapToolboxComponent {
+  private readonly tools = ["Add Location"];
+  private readonly HIGHLIGHT_ACTIVE = "button-highlight-active";
+  private activeToolName?: String;
   constructor(private readonly mapToolsService: MapToolsService) {
   }
 
+  getTools(): String[] {
+    return this.tools;
+  }
+
   addLocation() {
-    this.mapToolsService.addDrawInteraction();
+    if (this.activeToolName) {
+      this.mapToolsService.removeDrawInteraction();
+      this.activeToolName = undefined;
+      return;
+    }
+    const addedLoc$: Observable<Feature<Geometry>>
+      | undefined = this.mapToolsService.addDrawInteraction();
+    if (!addedLoc$) {
+      alert("Failed to enable draw mode");
+      return;
+    }
+    addedLoc$.subscribe((feature) =>
+      console.log("New feature added: " + JSON.stringify(feature.getGeometry())));
+    this.activeToolName = this.tools[0];
+  }
+
+  getStyle(toolName: String) {
+    return toolName === this.activeToolName ? this.HIGHLIGHT_ACTIVE : undefined;
   }
 }

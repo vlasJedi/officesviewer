@@ -6,6 +6,9 @@ import View from "ol/View";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
 import {Draw} from "ol/interaction";
+import {Collection, Feature} from "ol";
+import {Geometry} from "ol/geom";
+import {Observable, Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +17,8 @@ export class MapToolsService {
   private map?: Map;
   private featuresSource?: VectorSource;
   private drawInter?: Draw;
+  private drawnFeatures: Collection<Feature<Geometry>> = new Collection<Feature<Geometry>>();
+  private drawFeatureEmitter: Subject<Feature<Geometry>> = new Subject();
 
   constructor() { }
 
@@ -45,13 +50,22 @@ export class MapToolsService {
     });
   }
 
-  addDrawInteraction(): boolean {
-    if (!this.map) return false;
+  addDrawInteraction(): Observable<Feature<Geometry>> | undefined {
+    if (!this.map) return undefined;
     this.drawInter = new Draw({
       source: this.featuresSource,
       type: "Point",
+      features: this.drawnFeatures
     });
     this.map.addInteraction(this.drawInter);
-    return true;
+    this.drawnFeatures.on("add", (event) => this.drawFeatureEmitter.next(event.element));
+    return this.drawFeatureEmitter.asObservable();
+  }
+
+  removeDrawInteraction() {
+    if (!this.map || !this.drawInter) return;
+    this.drawFeatureEmitter.complete();
+    this.drawFeatureEmitter = new Subject<Feature<Geometry>>();
+    this.map.removeInteraction(this.drawInter);
   }
 }

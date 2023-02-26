@@ -1,5 +1,5 @@
 <div class="home-page-container">
-  <div class="tools-panel-container">
+  <div class="tools-panel-container" *ngIf="isMapToolsVisible() | async">
     <app-map-toolbox></app-map-toolbox>
   </div>
   <app-map-container></app-map-container>
