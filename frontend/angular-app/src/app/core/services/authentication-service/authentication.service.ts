@@ -1,6 +1,9 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {BehaviorSubject, catchError, map, Observable, of, tap} from "rxjs";
+import {AuthUser} from "src/app/core/interfaces/auth-user.interface";
+import {AuthUserImpl} from "../../models/auth-user.model";
+import {CORE_MODULE_CONFIG_INJECT, CoreModuleConfig} from "../../configs/core-module.config";
 
 @Injectable({
   // provided as singleton in a root module
@@ -15,10 +18,11 @@ export class AuthenticationService {
 
   // need to implement ping is auth available with some interval by using mapping
 
-  constructor(private readonly httpClient: HttpClient) {
-    this.getCurrentAuthUser()
-      .pipe(catchError(() => of("")))
-      .subscribe((value) => this.authSubject.next(value));
+  constructor(
+    @Inject(CORE_MODULE_CONFIG_INJECT) private readonly coreModuleConfig: CoreModuleConfig,
+    private readonly httpClient: HttpClient
+  ) {
+    this.getCurrentAuthUser().subscribe();
   }
 
   getCurrentUser$(): Observable<string> {
@@ -26,10 +30,10 @@ export class AuthenticationService {
   }
 
   getCurrentAuthUser(): Observable<string> {
-    return this.httpClient.get<{username: string}>("/user")
+    return this.httpClient.get<AuthUser>(this.coreModuleConfig.authUserConfig.url)
       .pipe(
-        catchError(() => of({username: ""})),
-        map((user: {username: string}) => user.username),
+        catchError(() => of(new AuthUserImpl())),
+        map(({username}: AuthUser) => username),
         tap((value) => {
           this.authSubject.next(value);
         }));
@@ -40,7 +44,7 @@ export class AuthenticationService {
     urlParams.set("username", username);
     urlParams.set("password", password);
     const headers = new HttpHeaders({"Content-Type": "application/x-www-form-urlencoded"});
-    return this.httpClient.post("/login", urlParams.toString(), {headers})
+    return this.httpClient.post(this.coreModuleConfig.loginConfig.url, urlParams.toString(), {headers})
       .pipe(
         map(() => username),
         tap((value) => {
@@ -50,7 +54,7 @@ export class AuthenticationService {
 
   logout(): Observable<any> {
     return this.httpClient
-      .post("/logout", undefined, {responseType: "text"})
+      .post(this.coreModuleConfig.logoutConfig.url, undefined, {responseType: "text"})
       .pipe(
         tap(() => {
           this.authSubject.next("");

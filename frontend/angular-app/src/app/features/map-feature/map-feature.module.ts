@@ -17,4 +17,8 @@ import {MapToolboxComponent} from './components/map-toolbox/map-toolbox.componen
     MapToolboxComponent
   ]
 })
-export class MapFeatureModule { }
+export class MapFeatureModule {
+  static configure() {
+
+  }
+}

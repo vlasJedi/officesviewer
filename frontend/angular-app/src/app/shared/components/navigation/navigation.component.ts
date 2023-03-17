@@ -19,7 +19,7 @@ export class NavigationComponent {
     ];
   }
 
-  trackByFn(index: number, item: {url: string, displayName: string}) {
-    return item.url;
+  trackByFn(index: number, {url}: {url: string, displayName: string}) {
+    return url;
   }
 }
