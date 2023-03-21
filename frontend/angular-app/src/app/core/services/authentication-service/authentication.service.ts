@@ -33,7 +33,7 @@ export class AuthenticationService {
     return this.httpClient.get<AuthUser>(this.coreModuleConfig.authUserConfig.url)
       .pipe(
         catchError(() => of(new AuthUserImpl())),
-        map(({username}: AuthUser) => username),
+        map(({username}: AuthUser = new AuthUserImpl()) => username),
         tap((value) => {
           this.authSubject.next(value);
         }));

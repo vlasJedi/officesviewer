@@ -4,6 +4,7 @@ import {HomePageComponent} from './components/home-page/home-page.component';
 import {SharedModule} from "src/app/shared/shared.module";
 import {HomeMapRoutingModule} from "./home-map-routing.module";
 import {MapFeatureModule} from "../../features/map-feature/map-feature.module";
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import {MapFeatureModule} from "../../features/map-feature/map-feature.module";
     CommonModule,
     SharedModule,
     HomeMapRoutingModule,
-    MapFeatureModule
+    MapFeatureModule,
+    MatSlideToggleModule
   ]
 })
 export class HomeMapModule { }
