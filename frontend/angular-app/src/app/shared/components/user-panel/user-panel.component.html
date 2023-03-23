@@ -5,10 +5,14 @@
     </div>
     <div class="user-panel-controls">
       <div class="details-btn-container">
-        <input class="details-btn" type="button" id="details-btn" value="Details" (click)="onDetailsClick()"/>
+        <button class="details-btn" id="details-btn" value="Details"
+                mat-raised-button color="primary"
+                (click)="onDetailsClick()">Details</button>
       </div>
       <div class="logout-btn-container">
-        <input class="logout-btn" type="button" id="logout-btn" value="Logout" (click)="onLogoutClick()"/>
+        <button class="logout-btn" id="logout-btn" value="Logout"
+                mat-raised-button color="basic"
+                (click)="onLogoutClick()">Logout</button>
       </div>
     </div>
   </div>

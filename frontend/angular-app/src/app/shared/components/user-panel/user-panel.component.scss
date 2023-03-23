@@ -18,12 +18,12 @@
   padding-right: 5px;
 }
 
-.logout-btn-container {
-  padding-top: 10px;
+.logout-btn-container, .details-btn-container {
   padding-right: 5px;
+  padding-bottom: 5px;
 }
 
-.details-btn-container {
-  padding-top: 10px;
-  padding-right: 5px;
+.logout-btn-container .logout-btn, .details-btn-container .details-btn {
+  height: 24px;
 }
+

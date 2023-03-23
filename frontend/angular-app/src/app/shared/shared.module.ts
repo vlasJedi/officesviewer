@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
-import { NavigationComponent } from './components/navigation/navigation.component';
-import { RouterLink } from "@angular/router";
-import { UserPanelComponent } from './components/user-panel/user-panel.component';
-
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {ReactiveFormsModule} from '@angular/forms';
+import {NavigationComponent} from './components/navigation/navigation.component';
+import {RouterLink} from "@angular/router";
+import {UserPanelComponent} from './components/user-panel/user-panel.component';
+import {MatButtonModule} from "@angular/material/button";
 
 
 @NgModule({
@@ -16,10 +16,11 @@ import { UserPanelComponent } from './components/user-panel/user-panel.component
     NavigationComponent,
     UserPanelComponent
   ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    RouterLink
-  ]
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        RouterLink,
+        MatButtonModule
+    ]
 })
 export class SharedModule { }
