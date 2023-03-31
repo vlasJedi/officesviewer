@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {RestApiConfig} from "../../../core/configs/rest-api.config";
 
 @Component({
   selector: 'app-navigation',
@@ -6,20 +7,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent {
-  getItems() {
-    return [
-      {
-        url: "/login",
-        displayName: "Login"
-      },
-      {
-        url: "/home",
-        displayName: "Home"
-      }
-    ];
+
+  @Input() navItems!: RestApiConfig[];
+
+  getItems(): RestApiConfig[] {
+    return this.navItems;
   }
 
-  trackByFn(index: number, {url}: {url: string, displayName: string}) {
+  trackByFn(index: number, {url}: RestApiConfig) {
     return url;
   }
 }

@@ -12,11 +12,11 @@ import {Observable} from "rxjs";
 export class MapToolboxComponent {
   private readonly tools = ["Add Location"];
   private readonly HIGHLIGHT_ACTIVE = "button-highlight-active";
-  private activeToolName?: String;
+  private activeToolName?: string;
   constructor(private readonly mapToolsService: MapToolsService) {
   }
 
-  getTools(): String[] {
+  getTools(): string[] {
     return this.tools;
   }
 
@@ -37,7 +37,7 @@ export class MapToolboxComponent {
     this.activeToolName = this.tools[0];
   }
 
-  getStyle(toolName: String) {
+  getStyle(toolName: string) {
     return toolName === this.activeToolName ? this.HIGHLIGHT_ACTIVE : undefined;
   }
 }

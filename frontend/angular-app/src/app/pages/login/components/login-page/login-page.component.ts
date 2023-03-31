@@ -9,7 +9,7 @@ import {Router} from "@angular/router";
   styleUrls: ['./login-page.component.scss'],
 })
 export class LoginPageComponent {
-  loginForm = new FormGroup({
+  readonly loginForm = new FormGroup({
     username: new FormControl(''),
     password: new FormControl(''),
   });

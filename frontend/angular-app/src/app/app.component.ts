@@ -1,4 +1,6 @@
 import {Component} from '@angular/core';
+import {ConfigService} from "./core/services/config-service/config.service";
+import {RestApiConfig} from "./core/configs/rest-api.config";
 
 @Component({
   selector: 'app-root',
@@ -9,7 +11,9 @@ export class AppComponent {
   readonly title = "Locations";
 
 
-  constructor() {
+  constructor(
+    private readonly configService: ConfigService
+  ) {
     // const srcList = [0, 1, 1, 2];
     // const listToExecute$ = of(...srcList);
     // interval(2000)
@@ -38,5 +42,9 @@ export class AppComponent {
     // interval(2000)
     //   .pipe(concatMap((index) => delay[index]), tap((val) => console.log(val))).subscribe();
     //listToExecute$.pipe(timer(0, 2000), tap((val) => console.log(val))).subscribe(() => {});
+  }
+
+  getNavItems(): RestApiConfig[] {
+    return this.configService.getAllRestApi();
   }
 }

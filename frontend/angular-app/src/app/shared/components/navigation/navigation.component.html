@@ -1,6 +1,6 @@
 <ul class="navigation-class">
   <li class="navigation-item" *ngFor="let item of getItems(); trackBy: trackByFn">
-    <button mat-button color="basic">
+    <button *ngIf="item.partOfNavigation" mat-button color="basic">
       <a routerLink="{{item.url}}">{{item.displayName}}</a>
     </button>
   </li>
