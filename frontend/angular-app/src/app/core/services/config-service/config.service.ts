@@ -1,6 +1,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {CORE_MODULE_CONFIG_INJECT, CoreModuleConfig} from "../../configs/core-module.config";
 import {RestApiConfig} from "../../configs/rest-api.config";
+import {ApiUrls} from "../../enums/api-urls.enum";
 
 @Injectable({
   providedIn: 'root'
@@ -11,28 +12,11 @@ export class ConfigService {
     @Inject(CORE_MODULE_CONFIG_INJECT) private readonly coreModuleConfig: CoreModuleConfig,
   ) { }
 
-  get loginConfig(): RestApiConfig {
-    return this.coreModuleConfig.loginConfig;
-  }
-
-  get logoutConfig(): RestApiConfig {
-    return this.coreModuleConfig.logoutConfig;
-  }
-
-  get authUserConfig(): RestApiConfig {
-    return this.coreModuleConfig.authUserConfig;
-  }
-
-  get homeConfig(): RestApiConfig {
-    return this.coreModuleConfig.homeConfig;
+  getRestConfig(key: ApiUrls) {
+    return this.coreModuleConfig.getRestConfig().get(key) || new RestApiConfig(ApiUrls.NONE);
   }
 
   getAllRestApi() {
-    return [
-      this.logoutConfig,
-      this.loginConfig,
-      this.authUserConfig,
-      this.homeConfig
-    ]
+    return Array.from(this.coreModuleConfig.getRestConfig(), ([k, v]) => v);
   }
 }

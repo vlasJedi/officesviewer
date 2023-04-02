@@ -1,19 +1,25 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {MapToolsService} from "src/app/features/map-feature/services/map-tools-service/map-tools.service";
 import {Feature} from "ol";
 import {Geometry} from "ol/geom";
-import {Observable} from "rxjs";
+import {Observable, ReplaySubject, Subject, takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-map-toolbox',
   templateUrl: './map-toolbox.component.html',
   styleUrls: ['./map-toolbox.component.scss']
 })
-export class MapToolboxComponent {
+export class MapToolboxComponent implements OnDestroy {
   private readonly tools = ["Add Location"];
   private readonly HIGHLIGHT_ACTIVE = "button-highlight-active";
+  private readonly destroySub = new ReplaySubject();
   private activeToolName?: string;
   constructor(private readonly mapToolsService: MapToolsService) {
+  }
+
+  ngOnDestroy(): void {
+    this.destroySub.next(true);
+    this.destroySub.complete();
   }
 
   getTools(): string[] {
@@ -32,7 +38,9 @@ export class MapToolboxComponent {
       alert("Failed to enable draw mode");
       return;
     }
-    addedLoc$.subscribe((feature) =>
+    addedLoc$
+      .pipe(takeUntil(this.destroySub.asObservable()))
+      .subscribe((feature) =>
       console.log("New feature added: " + JSON.stringify(feature.getGeometry())));
     this.activeToolName = this.tools[0];
   }

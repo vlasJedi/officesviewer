@@ -1,10 +1,10 @@
-import {Inject, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {BehaviorSubject, catchError, map, Observable, of, tap} from "rxjs";
 import {AuthUser} from "src/app/core/interfaces/auth-user.interface";
 import {AuthUserImpl} from "../../models/auth-user.model";
-import {CORE_MODULE_CONFIG_INJECT, CoreModuleConfig} from "../../configs/core-module.config";
 import {ConfigService} from "../config-service/config.service";
+import {ApiUrls} from "../../enums/api-urls.enum";
 
 @Injectable({
   // provided as singleton in a root module
@@ -31,7 +31,7 @@ export class AuthenticationService {
   }
 
   getCurrentAuthUser(): Observable<string> {
-    return this.httpClient.get<AuthUser>(this.configService.authUserConfig.url)
+    return this.httpClient.get<AuthUser>(this.configService.getRestConfig(ApiUrls.USER).url)
       .pipe(
         catchError(() => of(new AuthUserImpl())),
         map(({username}: AuthUser = new AuthUserImpl()) => username),
@@ -45,7 +45,7 @@ export class AuthenticationService {
     urlParams.set("username", username);
     urlParams.set("password", password);
     const headers = new HttpHeaders({"Content-Type": "application/x-www-form-urlencoded"});
-    return this.httpClient.post(this.configService.loginConfig.url, urlParams.toString(), {headers})
+    return this.httpClient.post(this.configService.getRestConfig(ApiUrls.LOGIN).url, urlParams.toString(), {headers})
       .pipe(
         map(() => username),
         tap((value) => {
@@ -55,7 +55,7 @@ export class AuthenticationService {
 
   logout(): Observable<any> {
     return this.httpClient
-      .post(this.configService.logoutConfig.url, undefined, {responseType: "text"})
+      .post(this.configService.getRestConfig(ApiUrls.LOGOUT).url, undefined, {responseType: "text"})
       .pipe(
         tap(() => {
           this.authSubject.next("");

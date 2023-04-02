@@ -1,5 +1,5 @@
 <div class="app-user-panel-container">
-  <div *ngIf="username; else loggedOut" class="user-panel-items">
+  <div *ngIf="authUsername$ | async as username; else loggedOut" class="user-panel-items">
     <div class="user-panel-username-container">
       Logged in as <span>{{ username }}</span>
     </div>

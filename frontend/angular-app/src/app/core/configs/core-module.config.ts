@@ -1,38 +1,26 @@
 import {RestApiConfig} from "./rest-api.config";
 import {InjectionToken} from "@angular/core";
+import {ApiUrls} from "../enums/api-urls.enum";
 
 export const CORE_MODULE_CONFIG_INJECT = new InjectionToken<CoreModuleConfig>("Core Module Config");
 export class CoreModuleConfig {
+  private readonly REST_CONFIG = new Map<ApiUrls, RestApiConfig>();
 
   constructor(
-    readonly _loginConfig = new RestApiConfig("/login", "Login", true),
-    readonly _homeConfig= new RestApiConfig("/home", "Home", true),
-    readonly _logoutConfig = new RestApiConfig("/logout", "Logout"),
-    readonly _authUserConfig = new RestApiConfig("/user"),
   ) {
-  }
-  get loginConfig(): RestApiConfig {
-    return this._loginConfig;
-  }
-
-  get logoutConfig(): RestApiConfig {
-    return this._logoutConfig;
-  }
-
-  get authUserConfig(): RestApiConfig {
-    return this._authUserConfig;
-  }
-
-  get homeConfig(): RestApiConfig {
-    return this._homeConfig;
+    this.REST_CONFIG.set(ApiUrls.LOGIN,
+      new RestApiConfig(ApiUrls.LOGIN, "/login", "Login", true));
+    this.REST_CONFIG.set(ApiUrls.HOME,
+      new RestApiConfig(ApiUrls.HOME, "/home", "Home", true));
+    this.REST_CONFIG.set(ApiUrls.LOGOUT,
+      new RestApiConfig(ApiUrls.LOGOUT, "/logout", "Logout"));
+    this.REST_CONFIG.set(ApiUrls.USER,
+      new RestApiConfig(ApiUrls.USER, "/user"));
+    this.REST_CONFIG.set(ApiUrls.USERS,
+      new RestApiConfig(ApiUrls.USERS, "/users", "Details"));
   }
 
-  getAllRestApi() {
-    return [
-      this.logoutConfig,
-      this.loginConfig,
-      this.authUserConfig,
-      this.homeConfig
-    ]
+  getRestConfig() {
+    return this.REST_CONFIG;
   }
 }

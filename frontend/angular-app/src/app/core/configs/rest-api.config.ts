@@ -1,9 +1,17 @@
+import {ApiUrls} from "../enums/api-urls.enum";
+
 export class RestApiConfig {
+
   constructor(
+    private readonly _name: ApiUrls,
     private readonly _url = "",
     private readonly _displayName= "",
     private readonly _partOfNavigation = false
   ) {
+  }
+
+  get name(): ApiUrls {
+    return this._name;
   }
 
   get url() {

@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
 import {ConfigService} from "./core/services/config-service/config.service";
 import {RestApiConfig} from "./core/configs/rest-api.config";
+import {AuthenticationService} from "./core/services/authentication-service/authentication.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-root',
@@ -12,7 +14,8 @@ export class AppComponent {
 
 
   constructor(
-    private readonly configService: ConfigService
+    private readonly configService: ConfigService,
+    private readonly authService: AuthenticationService
   ) {
     // const srcList = [0, 1, 1, 2];
     // const listToExecute$ = of(...srcList);
@@ -46,5 +49,9 @@ export class AppComponent {
 
   getNavItems(): RestApiConfig[] {
     return this.configService.getAllRestApi();
+  }
+
+  getUsername$(): Observable<string> {
+    return this.authService.getCurrentUser$();
   }
 }
