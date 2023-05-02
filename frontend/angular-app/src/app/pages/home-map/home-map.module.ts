@@ -5,10 +5,12 @@ import {SharedModule} from "src/app/shared/shared.module";
 import {HomeMapRoutingModule} from "./home-map-routing.module";
 import {MapFeatureModule} from "../../features/map-feature/map-feature.module";
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { UserInfoDialogComponent } from './components/user-info-dialog/user-info-dialog.component';
 
 @NgModule({
   declarations: [
-    HomePageComponent
+    HomePageComponent,
+    UserInfoDialogComponent
   ],
   imports: [
     CommonModule,

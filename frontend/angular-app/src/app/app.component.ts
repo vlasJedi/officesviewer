@@ -12,7 +12,6 @@ import {Observable} from "rxjs";
 export class AppComponent {
   readonly title = "Locations";
 
-
   constructor(
     private readonly configService: ConfigService,
     private readonly authService: AuthenticationService
