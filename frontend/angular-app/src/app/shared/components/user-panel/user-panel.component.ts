@@ -36,7 +36,7 @@ export class UserPanelComponent {
           data: {
             template: this.userInfoDialogContent,
             title: "User Info",
-            data: Object.keys(userInfo).map(k => ({key: k, value: userInfo[k as keyof AppUser]}))
+            data: userInfo
           }
         });
       });

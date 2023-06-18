@@ -1,15 +1,19 @@
-<h1 mat-dialog-title>{{data.title}}</h1>
-<mat-dialog-content>
-  {{data.desc}}
-  <ng-container *ngIf="data.template">
-    <ng-container *ngTemplateOutlet="data.template; context: { $implicit: data.data }">
-    </ng-container>
-  </ng-container>
-  <ng-container *ngIf="!data.template && data.data">
-    <div *ngFor="let item of data.data;">{{item.key}}: {{item.value}}</div>
-  </ng-container>
-</mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-button (click)="onCancel()">Cancel</button>
-  <button mat-button (click)="onOk()" cdkFocusInitial>OK</button>
-</mat-dialog-actions>
+<div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%">
+  <div>
+    <h1 mat-dialog-title>{{data.title}}</h1>
+    <mat-dialog-content>
+      {{data.desc}}
+      <ng-container *ngIf="data.template">
+        <ng-container *ngTemplateOutlet="data.template; context: { $implicit: data.data }">
+        </ng-container>
+      </ng-container>
+      <ng-container *ngIf="!data.template && data.data">
+        <div *ngFor="let item of data.data;">{{item.key}}: {{item.value}}</div>
+      </ng-container>
+    </mat-dialog-content>
+  </div>
+  <mat-dialog-actions style="justify-content: space-between; padding-left: 1rem; padding-right: 1rem;">
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-button (click)="onOk()" cdkFocusInitial>OK</button>
+  </mat-dialog-actions>
+</div>

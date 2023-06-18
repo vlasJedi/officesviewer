@@ -20,16 +20,24 @@
 </div>
 
 <ng-template #userInfoDialogContent let-data>
-  <div *ngFor="let item of data">
-    <div *ngIf="item.key === 'roles'">
-      <div>Roles</div>
+  <div style="display: flex; flex-direction: column">
+    <mat-form-field>
+      <mat-label>Username</mat-label>
+      <input type="text" matInput disabled [(ngModel)]="data.username" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>First Name</mat-label>
+      <input type="text" matInput disabled [(ngModel)]="data.firstName" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Second Name</mat-label>
+      <input type="text" matInput disabled [(ngModel)]="data.secondName" />
+    </mat-form-field>
+    <div style="padding-left: 1rem">
+      <div style="font-size: 0.75rem">Roles</div>
       <div>
-        <span *ngFor="let role of item.value">{{role.roleName}}</span>
+        <span *ngFor="let role of data.roles; last as isLast">{{role.roleName + (isLast ? '' : ', ')}}</span>
       </div>
     </div>
-    <mat-form-field *ngIf="item.key !== 'roles'">
-      <mat-label>{{item.key}}</mat-label>
-      <input type="text" matInput disabled [(ngModel)]="item.value" />
-    </mat-form-field>
   </div>
 </ng-template>

@@ -14,7 +14,7 @@ export class DialogService {
   }
 
   open<T = any>(comp?: TemplateRef<T>, options = {}) {
-    options = Object.assign({width: "50vw", height: "50vh"}, options);
+    options = Object.assign({width: "35vw", height: "45vh"}, options);
     this.state.currentlyOpened = comp ? this.dialog.open(comp, options)
       : this.dialog.open<DialogBoxComponent>(DialogBoxComponent, options);
   }
