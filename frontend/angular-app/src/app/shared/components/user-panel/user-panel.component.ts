@@ -1,9 +1,12 @@
-import {Component, Input} from '@angular/core';
+import { Component, Input, TemplateRef, ViewChild } from '@angular/core';
 import {Observable} from "rxjs";
 import {AuthenticationService} from "../../../core/services/authentication-service/authentication.service";
 import {Router} from "@angular/router";
 import {ConfigService} from "../../../core/services/config-service/config.service";
 import {ApiUrls} from "../../../core/enums/api-urls.enum";
+import { DialogService } from "../../../core/services/dialog-service/dialog.service";
+import { UserService } from "../../../core/services/user-service/user.service";
+import { AppUser } from "../../../core/interfaces/user.interface";
 
 @Component({
   selector: 'app-user-panel',
@@ -14,15 +17,30 @@ export class UserPanelComponent {
   @Input("username$")
   _authUsername$!: Observable<string>;
 
+  @ViewChild("userInfoDialogContent")
+  userInfoDialogContent!: TemplateRef<any>;
+
   constructor(
     private readonly configService: ConfigService,
     private readonly authService: AuthenticationService,
-    private readonly router: Router
+    private readonly userService: UserService,
+    private readonly router: Router,
+    private readonly dialogService: DialogService,
   ) {
   }
 
   onDetailsClick() {
-    alert("Not yet implemented");
+    this.authService.getCurrentUser$().subscribe((user) => {
+      this.userService.getUserInfo(user).subscribe((userInfo) => {
+        this.dialogService.open(undefined, {
+          data: {
+            template: this.userInfoDialogContent,
+            title: "User Info",
+            data: Object.keys(userInfo).map(k => ({key: k, value: userInfo[k as keyof AppUser]}))
+          }
+        });
+      });
+    });
   }
 
   onLogoutClick() {

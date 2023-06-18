@@ -6,6 +6,7 @@ import {HomeMapRoutingModule} from "./home-map-routing.module";
 import {MapFeatureModule} from "../../features/map-feature/map-feature.module";
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { UserInfoDialogComponent } from './components/user-info-dialog/user-info-dialog.component';
+import { MatDialogModule } from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { UserInfoDialogComponent } from './components/user-info-dialog/user-info
     SharedModule,
     HomeMapRoutingModule,
     MapFeatureModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatDialogModule
   ]
 })
 export class HomeMapModule { }

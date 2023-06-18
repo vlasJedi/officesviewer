@@ -1,11 +1,13 @@
-import {ModuleWithProviders, NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {CORE_MODULE_CONFIG_INJECT, CoreModuleConfig} from "./configs/core-module.config";
+import { ModuleWithProviders, NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { CORE_MODULE_CONFIG_INJECT, CoreModuleConfig } from "./configs/core-module.config";
+import { MatDialogModule } from "@angular/material/dialog";
 
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule
+    CommonModule,
+    MatDialogModule
   ]
 })
 export class CoreModule {

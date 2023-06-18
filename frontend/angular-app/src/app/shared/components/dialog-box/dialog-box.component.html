@@ -1,1 +1,15 @@
-<p>dialog-box works!</p>
+<h1 mat-dialog-title>{{data.title}}</h1>
+<mat-dialog-content>
+  {{data.desc}}
+  <ng-container *ngIf="data.template">
+    <ng-container *ngTemplateOutlet="data.template; context: { $implicit: data.data }">
+    </ng-container>
+  </ng-container>
+  <ng-container *ngIf="!data.template && data.data">
+    <div *ngFor="let item of data.data;">{{item.key}}: {{item.value}}</div>
+  </ng-container>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button (click)="onOk()" cdkFocusInitial>OK</button>
+</mat-dialog-actions>

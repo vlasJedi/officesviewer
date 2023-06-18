@@ -7,6 +7,7 @@ import {SharedModule} from "./shared/shared.module";
 import {CoreModule} from "./core/core.module";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatToolbarModule} from "@angular/material/toolbar";
+import { MatDialogModule } from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {MatToolbarModule} from "@angular/material/toolbar";
         SharedModule,
         CoreModule.configure(),
         BrowserAnimationsModule,
-        MatToolbarModule
+        MatToolbarModule,
+        MatDialogModule,
     ],
   providers: [],
   bootstrap: [AppComponent]
