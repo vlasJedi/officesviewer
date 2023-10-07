@@ -7,12 +7,12 @@
       <div class="details-btn-container">
         <button class="details-btn" id="details-btn" value="Details"
                 mat-raised-button color="primary"
-                (click)="onDetailsClick()">Details</button>
+                (click)="clicks$.details.next('')">Details</button>
       </div>
       <div class="logout-btn-container">
         <button class="logout-btn" id="logout-btn" value="Logout"
                 mat-raised-button color="basic"
-                (click)="onLogoutClick()">Logout</button>
+                (click)="clicks$.logout.next('')">Logout</button>
       </div>
     </div>
   </div>
