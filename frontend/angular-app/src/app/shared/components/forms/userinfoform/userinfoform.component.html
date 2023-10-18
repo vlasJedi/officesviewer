@@ -1,0 +1,25 @@
+<form [formGroup]="form" style="display: flex; flex-flow: column">
+  <mat-form-field>
+    <mat-label>ID</mat-label>
+    <input type="text" matInput formControlName="id"/>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Username</mat-label>
+    <input type="text" matInput formControlName="username"/>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>First Name</mat-label>
+    <input type="text" matInput formControlName="firstName"/>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Second Name</mat-label>
+    <input type="text" matInput formControlName="secondName"/>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Roles</mat-label>
+    <mat-select formControlName="roles">
+      <mat-option>None</mat-option>
+      <mat-option *ngFor="let opt of getRolesOptions()" [value]="opt">{{opt}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</form>

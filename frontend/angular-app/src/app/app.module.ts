@@ -8,20 +8,22 @@ import {CoreModule} from "./core/core.module";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import { MatDialogModule } from "@angular/material/dialog";
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
     AppComponent
   ],
     imports: [
-        BrowserModule,
-        AppRoutingModule,
-        HttpClientModule,
-        SharedModule,
-        CoreModule.configure(),
-        BrowserAnimationsModule,
-        MatToolbarModule,
-        MatDialogModule,
+      BrowserModule,
+      AppRoutingModule,
+      HttpClientModule,
+      SharedModule,
+      CoreModule.configure(),
+      BrowserAnimationsModule,
+      MatToolbarModule,
+      MatDialogModule,
+      FormsModule
     ],
   providers: [],
   bootstrap: [AppComponent]

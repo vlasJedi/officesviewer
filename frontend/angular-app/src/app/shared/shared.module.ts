@@ -11,6 +11,8 @@ import { OverlayDirective } from './directives/overlay.directive';
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatInputModule } from "@angular/material/input";
 import { MatFormFieldModule } from "@angular/material/form-field";
+import { UserinfoformComponent } from './components/forms/userinfoform/userinfoform.component';
+import { MatSelectModule } from "@angular/material/select";
 
 
 @NgModule({
@@ -20,6 +22,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
     DialogBoxComponent,
     BackdropComponent,
     OverlayDirective,
+    UserinfoformComponent,
   ],
   exports: [
     NavigationComponent,
@@ -37,6 +40,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
     MatInputModule,
     MatFormFieldModule,
     FormsModule,
+    MatSelectModule,
   ]
 })
 export class SharedModule { }

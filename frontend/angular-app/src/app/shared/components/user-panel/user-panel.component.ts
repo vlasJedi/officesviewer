@@ -7,6 +7,7 @@ import { ApiUrls } from "../../../core/enums/api-urls.enum";
 import { DialogService } from "../../../core/services/dialog-service/dialog.service";
 import { UserService } from "../../../core/services/user-service/user.service";
 import { AuthUserImpl } from "../../../core/models/auth-user.model";
+import { UserinfoformComponent } from "../forms/userinfoform/userinfoform.component";
 
 @Component({
   selector: 'app-user-panel',
@@ -65,9 +66,15 @@ export class UserPanelComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (userInfo) => {
           if (!userInfo.username) return;
-          this.dialogService.open(undefined, {
+          // this.dialogService.open(undefined, {
+          //   data: {
+          //     template: this.userInfoDialogContent,
+          //     title: "User Info",
+          //     data: userInfo
+          //   }
+          // });
+          this.dialogService.openAsComponent(UserinfoformComponent, {
             data: {
-              template: this.userInfoDialogContent,
               title: "User Info",
               data: userInfo
             }
