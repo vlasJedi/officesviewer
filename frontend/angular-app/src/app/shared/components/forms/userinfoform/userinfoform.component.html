@@ -1,4 +1,5 @@
-<form [formGroup]="form" style="display: flex; flex-flow: column">
+<form [formGroup]="state.form!" style="display: flex; flex-flow: column; padding: 1rem">
+  <h2>User Details</h2>
   <mat-form-field>
     <mat-label>ID</mat-label>
     <input type="text" matInput formControlName="id"/>
@@ -17,8 +18,7 @@
   </mat-form-field>
   <mat-form-field>
     <mat-label>Roles</mat-label>
-    <mat-select formControlName="roles">
-      <mat-option>None</mat-option>
+    <mat-select formControlName="roles" multiple>
       <mat-option *ngFor="let opt of getRolesOptions()" [value]="opt">{{opt}}</mat-option>
     </mat-select>
   </mat-form-field>

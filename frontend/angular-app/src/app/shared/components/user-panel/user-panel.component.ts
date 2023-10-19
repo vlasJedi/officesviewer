@@ -7,7 +7,8 @@ import { ApiUrls } from "../../../core/enums/api-urls.enum";
 import { DialogService } from "../../../core/services/dialog-service/dialog.service";
 import { UserService } from "../../../core/services/user-service/user.service";
 import { AuthUserImpl } from "../../../core/models/auth-user.model";
-import { UserinfoformComponent } from "../forms/userinfoform/userinfoform.component";
+import { UserDetailsConfig, UserinfoformComponent } from "../forms/userinfoform/userinfoform.component";
+import { AppUser } from "../../../core/interfaces/user.interface";
 
 @Component({
   selector: 'app-user-panel',
@@ -73,11 +74,17 @@ export class UserPanelComponent implements OnInit, OnDestroy {
           //     data: userInfo
           //   }
           // });
-          this.dialogService.openAsComponent(UserinfoformComponent, {
-            data: {
-              title: "User Info",
-              data: userInfo
-            }
+          this.dialogService.openAsComponent<UserinfoformComponent, UserDetailsConfig>(UserinfoformComponent, {
+            matDialog: {
+              data: {
+                data: {
+                  user: userInfo as AppUser
+                },
+              },
+              height: '60vh',
+              width: '20vw',
+              minWidth: "20rem",
+            },
           });
         }, error: (err) => {
           console.error(`Could not show user details due to error: ${err.toString()}`);

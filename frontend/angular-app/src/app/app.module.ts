@@ -7,7 +7,7 @@ import {SharedModule} from "./shared/shared.module";
 import {CoreModule} from "./core/core.module";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatToolbarModule} from "@angular/material/toolbar";
-import { MatDialogModule } from "@angular/material/dialog";
+import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from "@angular/material/dialog";
 import { FormsModule } from "@angular/forms";
 
 @NgModule({
@@ -25,7 +25,9 @@ import { FormsModule } from "@angular/forms";
       MatDialogModule,
       FormsModule
     ],
-  providers: [],
+  providers: [
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {panelClass: "default-dialog-styles"}}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

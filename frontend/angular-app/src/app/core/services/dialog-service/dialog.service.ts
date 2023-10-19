@@ -1,6 +1,6 @@
 import { Component, Injectable, TemplateRef } from '@angular/core';
 import { DialogBoxComponent } from "../../../shared/components/dialog-box/dialog-box.component";
-import { MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material/dialog";
 import { ComponentType } from "@angular/cdk/overlay";
 
 @Injectable({
@@ -20,9 +20,10 @@ export class DialogService {
       : this.dialog.open<DialogBoxComponent>(DialogBoxComponent, options);
   }
 
-  openAsComponent<T = any>(comp: ComponentType<T>, options: {}) {
-    options = Object.assign({width: "35vw", height: "45vh"}, options);
-    this.state.currentlyOpened = this.dialog.open(comp, options);
+  openAsComponent<T, D, R = any>(comp: ComponentType<T>, options: {matDialog?: MatDialogConfig<D>} = {}) {
+    const matDialogOpts = Object.assign({width: "35vw", height: "45vh"},
+      options.matDialog || {});
+    this.state.currentlyOpened = this.dialog.open<T, D | {}, R>(comp, matDialogOpts);
   }
 
   close() {
