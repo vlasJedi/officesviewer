@@ -1,5 +1,16 @@
-import { Component, Input, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { catchError, concatMap, first, Observable, of, OperatorFunction, Subject, takeUntil, throttleTime } from "rxjs";
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  catchError,
+  concatMap,
+  first, forkJoin,
+  Observable,
+  of,
+  OperatorFunction,
+  Subject,
+  Subscription,
+  takeUntil,
+  throttleTime
+} from "rxjs";
 import { AuthenticationService } from "../../../core/services/authentication-service/authentication.service";
 import { Router } from "@angular/router";
 import { ConfigService } from "../../../core/services/config-service/config.service";
@@ -9,6 +20,7 @@ import { UserService } from "../../../core/services/user-service/user.service";
 import { AuthUserImpl } from "../../../core/models/auth-user.model";
 import { UserDetailsConfig, UserinfoformComponent } from "../forms/userinfoform/userinfoform.component";
 import { AppUser } from "../../../core/interfaces/user.interface";
+import { RoleModel, RoleService } from "../../../core/services/role-service/role.service";
 
 @Component({
   selector: 'app-user-panel',
@@ -16,21 +28,24 @@ import { AppUser } from "../../../core/interfaces/user.interface";
   styleUrls: ['./user-panel.component.scss']
 })
 export class UserPanelComponent implements OnInit, OnDestroy {
-  @Input("username$")
-  _authUsername$!: Observable<string>;
+  @Input("user$")
+  _authUser$!: Observable<AppUser>;
 
-  @ViewChild("userInfoDialogContent")
-  userInfoDialogContent!: TemplateRef<any>;
+  // @ViewChild("userInfoDialogContent")
+  // userInfoDialogContent!: TemplateRef<any>;
   destroyNotifier$: Subject<any> = new Subject<any>();
   clicks$ = {
     details: new Subject<any>(),
     logout: new Subject(),
   }
 
+  private userDetailsDialogSubscript?: Subscription;
+
   constructor(
     private readonly configService: ConfigService,
     private readonly authService: AuthenticationService,
     private readonly userService: UserService,
+    private readonly roleService: RoleService,
     private readonly router: Router,
     private readonly dialogService: DialogService,
   ) {
@@ -50,46 +65,50 @@ export class UserPanelComponent implements OnInit, OnDestroy {
   }
 
   private onDetailsClick() {
-    this.authUsername$.pipe(
-      first(),
-      concatMap((username) => {
-        if (!username) {
-          throw new Error(`No user is logged in`);
-        }
-        console.debug(`Username: ${username} is provided, retrieving userinfo`);
-        return this.userService.getUserInfo(username);
-      }),
-      catchError((err) => {
-        console.error(`Found an exception during getting userinfo: ${err.toString()}`);
-        return of(new AuthUserImpl());
-      }),
-    )
+    this.userDetailsDialogSubscript = forkJoin([
+      this.authUser$.pipe(first()),
+      this.roleService.getRoles()
+    ])
       .subscribe({
-        next: (userInfo) => {
-          if (!userInfo.username) return;
-          // this.dialogService.open(undefined, {
-          //   data: {
-          //     template: this.userInfoDialogContent,
-          //     title: "User Info",
-          //     data: userInfo
-          //   }
-          // });
-          this.dialogService.openAsComponent<UserinfoformComponent, UserDetailsConfig>(UserinfoformComponent, {
-            matDialog: {
-              data: {
-                data: {
-                  user: userInfo as AppUser
-                },
-              },
-              height: '60vh',
-              width: '20vw',
-              minWidth: "20rem",
-            },
-          });
-        }, error: (err) => {
-          console.error(`Could not show user details due to error: ${err.toString()}`);
+        next: ([authUser, roles]) => {
+          this.userDetailsDialogSubscript?.unsubscribe();
+          if (!authUser?.username || !roles?.length) {
+            this.dialogService.showErrorDialog({desc: "Could not fetch user details!"});
+            return;
+          }
+          this.openUserDetails(authUser, roles);
+        },
+        error: (err) => {
+          this.dialogService.showErrorDialog({desc: `Could not fetch user details! ${err.toString()}`});
         }
       });
+  }
+
+  private openUserDetails(authUser: AppUser, roles: RoleModel[]) {
+    this.dialogService.openAsComponent<UserinfoformComponent, UserDetailsConfig>(UserinfoformComponent, {
+      matDialog: {
+        data: {
+          data: {
+            user: authUser,
+            roles: roles,
+          },
+          options: {
+            rolesSelector: {
+              disable: !this.userService.allowedRoleChange(authUser),
+            }
+          }
+        },
+        height: '60vh',
+        width: '20vw',
+        minWidth: "20rem",
+      },
+    }).afterClosed().subscribe((res) => {
+      if (!res?.refresh) return;
+      // just trigger refresh
+      this.authService.getCurrentAuthUser().subscribe(() => {
+        console.debug(`User data refreshed on UI`);
+      });
+    });
   }
 
   private onLogoutClick() {
@@ -103,7 +122,7 @@ export class UserPanelComponent implements OnInit, OnDestroy {
     });
   }
 
-  get authUsername$(): Observable<string> {
-    return this._authUsername$;
+  get authUser$(): Observable<AppUser> {
+    return this._authUser$;
   }
 }

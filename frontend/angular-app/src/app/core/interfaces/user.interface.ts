@@ -9,3 +9,11 @@ export interface AppUser {
   readonly firstName: string;
   readonly secondName: string;
 }
+
+export class AppUserImpl implements AppUser {
+  readonly firstName: string = '';
+  readonly id: string = '';
+  readonly roles: UserRole[] = [];
+  readonly secondName: string = '';
+  readonly username: string = '';
+}

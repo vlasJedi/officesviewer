@@ -1,8 +1,13 @@
 package com.lux.viewer.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lux.viewer.models.AppUser;
 import com.lux.viewer.models.RoleEnum;
+import com.lux.viewer.security.AppUserDetails;
+import com.lux.viewer.services.AppUserService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,6 +21,11 @@ import java.security.SecureRandom;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+    private final AppUserService appUserService;
+    @Autowired
+    public SecurityConfig(AppUserService userService) {
+        this.appUserService = userService;
+    }
     @Bean
     // SecurityFilterChain interface to match HttpServletRequest
     // and provide Filters
@@ -40,6 +50,9 @@ public class SecurityConfig {
             // prevent redirects from spring so this is done by client code
             .successHandler((request, response, authentication) -> {
                 response.setStatus(HttpServletResponse.SC_OK);
+                AppUser user = ((AppUserDetails) appUserService.loadUserByUsername(authentication.getName())).getUser();
+                ObjectMapper mapper = new ObjectMapper();
+                response.getOutputStream().print(mapper.writeValueAsString(user));
             })
             // prevent redirects from spring so this is done by client code
             .failureHandler(((request, response, exception) -> {

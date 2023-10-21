@@ -1,6 +1,7 @@
 package com.lux.viewer.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -24,7 +25,8 @@ public class Role {
     // class field name of associated entity
     @ManyToMany(mappedBy = "roles")
     // during serial to json this field is excluded
-    @JsonBackReference
+//    @JsonBackReference
+    @JsonIgnore
     private List<AppUser> appUserList;
 
     @Column(name = "role_name", unique = true, nullable = false)

@@ -1,10 +1,9 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {BehaviorSubject, catchError, map, Observable, of, tap} from "rxjs";
-import {AuthUser} from "src/app/core/interfaces/auth-user.interface";
-import {AuthUserImpl} from "../../models/auth-user.model";
-import {ConfigService} from "../config-service/config.service";
-import {ApiUrls} from "../../enums/api-urls.enum";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { BehaviorSubject, catchError, Observable, of, tap } from "rxjs";
+import { ConfigService } from "../config-service/config.service";
+import { ApiUrls } from "../../enums/api-urls.enum";
+import { AppUser, AppUserImpl } from "../../interfaces/user.interface";
 
 @Injectable({
   // provided as singleton in a root module
@@ -13,9 +12,9 @@ import {ApiUrls} from "../../enums/api-urls.enum";
 })
 export class AuthenticationService {
   // on a new subscription emits last emitted value
-  private readonly authSubject: BehaviorSubject<string> = new BehaviorSubject<string>("");
+  private readonly authSubject: BehaviorSubject<AppUser> = new BehaviorSubject<AppUser>(new AppUserImpl());
   // get from subject its related observable
-  private readonly currentAuthUser$: Observable<string> = this.authSubject.asObservable();
+  // private readonly currentAuthUser$: Observable<string> = this.authSubject.asObservable();
 
   // need to implement ping is auth available with some interval by using mapping
 
@@ -26,30 +25,31 @@ export class AuthenticationService {
     this.getCurrentAuthUser().subscribe();
   }
 
-  getCurrentUser$(): Observable<string> {
-    return this.currentAuthUser$;
+  getCurrentUser$(): Observable<AppUser> {
+    return this.authSubject.asObservable();
   }
 
-  getCurrentAuthUser(): Observable<string> {
-    return this.httpClient.get<AuthUser>(this.configService.getRestConfig(ApiUrls.USER).url)
+  getCurrentAuthUser(): Observable<AppUser> {
+    return this.httpClient.get<AppUser>(this.configService.getRestConfig(ApiUrls.USER).url)
       .pipe(
-        catchError(() => of(new AuthUserImpl())),
-        map(({username}: AuthUser = new AuthUserImpl()) => username),
-        tap((value) => {
+        catchError(() => of(new AppUserImpl())),
+        // map(({username}: AuthUser = new AuthUserImpl()) => username),
+        tap((value: AppUser) => {
+          console.debug(`Push new auth user: ${JSON.stringify(value)}`);
           this.authSubject.next(value);
         }));
   }
 
-  authenticate(username: string, password: string): Observable<string> {
+  authenticate(username: string, password: string): Observable<AppUser> {
     const urlParams = new URLSearchParams();
     urlParams.set("username", username);
     urlParams.set("password", password);
     const headers = new HttpHeaders({"Content-Type": "application/x-www-form-urlencoded"});
-    return this.httpClient.post(this.configService.getRestConfig(ApiUrls.LOGIN).url, urlParams.toString(), {headers})
+    return this.httpClient.post<AppUser>(this.configService.getRestConfig(ApiUrls.LOGIN).url, urlParams.toString(), {headers})
       .pipe(
-        map(() => username),
-        tap((value) => {
-          this.authSubject.next(value);
+        tap((appUser) => {
+          console.debug(`Push new auth user: ${JSON.stringify(appUser)}`);
+          this.authSubject.next(appUser);
         }));
   }
 
@@ -58,7 +58,8 @@ export class AuthenticationService {
       .post(this.configService.getRestConfig(ApiUrls.LOGOUT).url, undefined, {responseType: "text"})
       .pipe(
         tap(() => {
-          this.authSubject.next("");
+          console.debug(`Push new auth user: ${JSON.stringify(new AppUserImpl())}`);
+          this.authSubject.next(new AppUserImpl());
         })
       );
   }

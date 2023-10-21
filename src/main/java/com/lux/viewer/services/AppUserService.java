@@ -46,4 +46,15 @@ public class AppUserService implements UserDetailsService {
         userOpt.get().getRoles().size();
         return new AppUserDetails(userOpt.get());
     }
+
+    @Transactional
+    public Optional<AppUser> getByUserId(Long id) {
+        return userRepository.findById(id);
+    }
+
+    @Transactional
+    public AppUser updateUser(AppUser updatedUser) {
+        userRepository.saveAndFlush(updatedUser);
+        return updatedUser;
+    }
 }

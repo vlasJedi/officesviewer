@@ -1,5 +1,5 @@
 import { Component, Injectable, TemplateRef } from '@angular/core';
-import { DialogBoxComponent } from "../../../shared/components/dialog-box/dialog-box.component";
+import { DialogBoxComponent, DialogBoxInput } from "../../../shared/components/dialog-box/dialog-box.component";
 import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material/dialog";
 import { ComponentType } from "@angular/cdk/overlay";
 
@@ -24,9 +24,15 @@ export class DialogService {
     const matDialogOpts = Object.assign({width: "35vw", height: "45vh"},
       options.matDialog || {});
     this.state.currentlyOpened = this.dialog.open<T, D | {}, R>(comp, matDialogOpts);
+    return this.state.currentlyOpened;
   }
 
   close() {
     this.state.currentlyOpened?.close();
+  }
+
+  showErrorDialog(config: DialogBoxInput) {
+    this.state.currentlyOpened = this.dialog.open<DialogBoxComponent, DialogBoxInput, any>(DialogBoxComponent, {data: config})
+    return this.state.currentlyOpened;
   }
 }

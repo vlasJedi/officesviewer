@@ -34,7 +34,7 @@ public class AppUser {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     // resolve circular ref, so user still contain a ref to roles, but roles does not have ref to user
     // during serialization
-    @JsonManagedReference
+//    @JsonManagedReference
     private List<Role> roles;
 
     // may need to impl column validation

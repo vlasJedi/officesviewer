@@ -1,7 +1,7 @@
 <div class="app-user-panel-container">
-  <div *ngIf="authUsername$ | async as username; else loggedOut" class="user-panel-items">
+  <div *ngIf="(authUser$ | async)?.username; else loggedOut" class="user-panel-items">
     <div class="user-panel-username-container">
-      Logged in as <span>{{ username }}</span>
+      Logged in as <span>{{ (authUser$ | async)?.username }}</span>
     </div>
     <div class="user-panel-controls">
       <div class="details-btn-container">
@@ -19,25 +19,25 @@
   <ng-template #loggedOut>You are not logged in</ng-template>
 </div>
 
-<ng-template #userInfoDialogContent let-data>
-  <div style="display: flex; flex-direction: column">
-    <mat-form-field>
-      <mat-label>Username</mat-label>
-      <input type="text" matInput disabled [(ngModel)]="data.username" />
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>First Name</mat-label>
-      <input type="text" matInput disabled [(ngModel)]="data.firstName" />
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Second Name</mat-label>
-      <input type="text" matInput disabled [(ngModel)]="data.secondName" />
-    </mat-form-field>
-    <div style="padding-left: 1rem">
-      <div style="font-size: 0.75rem">Roles</div>
-      <div>
-        <span *ngFor="let role of data.roles; last as isLast">{{role.roleName + (isLast ? '' : ', ')}}</span>
-      </div>
-    </div>
-  </div>
-</ng-template>
+<!--<ng-template #userInfoDialogContent let-data>-->
+<!--  <div style="display: flex; flex-direction: column">-->
+<!--    <mat-form-field>-->
+<!--      <mat-label>Username</mat-label>-->
+<!--      <input type="text" matInput disabled [(ngModel)]="data.username" />-->
+<!--    </mat-form-field>-->
+<!--    <mat-form-field>-->
+<!--      <mat-label>First Name</mat-label>-->
+<!--      <input type="text" matInput disabled [(ngModel)]="data.firstName" />-->
+<!--    </mat-form-field>-->
+<!--    <mat-form-field>-->
+<!--      <mat-label>Second Name</mat-label>-->
+<!--      <input type="text" matInput disabled [(ngModel)]="data.secondName" />-->
+<!--    </mat-form-field>-->
+<!--    <div style="padding-left: 1rem">-->
+<!--      <div style="font-size: 0.75rem">Roles</div>-->
+<!--      <div>-->
+<!--        <span *ngFor="let role of data.roles; last as isLast">{{role.roleName + (isLast ? '' : ', ')}}</span>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</ng-template>-->

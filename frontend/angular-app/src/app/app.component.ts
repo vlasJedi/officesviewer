@@ -3,6 +3,7 @@ import {ConfigService} from "./core/services/config-service/config.service";
 import {RestApiConfig} from "./core/configs/rest-api.config";
 import {AuthenticationService} from "./core/services/authentication-service/authentication.service";
 import {Observable} from "rxjs";
+import { AppUser } from "./core/interfaces/user.interface";
 
 @Component({
   selector: 'app-root',
@@ -50,7 +51,7 @@ export class AppComponent {
     return this.configService.getAllRestApi();
   }
 
-  getUsername$(): Observable<string> {
+  getUsername$(): Observable<AppUser> {
     return this.authService.getCurrentUser$();
   }
 }

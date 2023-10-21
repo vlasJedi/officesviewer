@@ -1,25 +1,26 @@
-<form [formGroup]="state.form!" style="display: flex; flex-flow: column; padding: 1rem">
+<form [formGroup]="state.form!" (ngSubmit)="onSubmit()" style="display: flex; flex-flow: column; padding: 1rem">
   <h2>User Details</h2>
-  <mat-form-field>
+  <mat-form-field class="user-panel-field">
     <mat-label>ID</mat-label>
     <input type="text" matInput formControlName="id"/>
   </mat-form-field>
-  <mat-form-field>
+  <mat-form-field class="user-panel-field">
     <mat-label>Username</mat-label>
     <input type="text" matInput formControlName="username"/>
   </mat-form-field>
-  <mat-form-field>
+  <mat-form-field class="user-panel-field">
     <mat-label>First Name</mat-label>
     <input type="text" matInput formControlName="firstName"/>
   </mat-form-field>
-  <mat-form-field>
+  <mat-form-field class="user-panel-field">
     <mat-label>Second Name</mat-label>
     <input type="text" matInput formControlName="secondName"/>
   </mat-form-field>
-  <mat-form-field>
+  <mat-form-field class="user-panel-field">
     <mat-label>Roles</mat-label>
     <mat-select formControlName="roles" multiple>
-      <mat-option *ngFor="let opt of getRolesOptions()" [value]="opt">{{opt}}</mat-option>
+      <mat-option *ngFor="let opt of getRolesOptions()" [value]="opt.id">{{opt.roleName}}</mat-option>
     </mat-select>
   </mat-form-field>
+  <button mat-flat-button type="submit" color="primary">Save</button>
 </form>

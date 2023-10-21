@@ -8,8 +8,14 @@
   justify-content: center;
 }
 
+.form-login {
+  display: flex;
+  flex-direction: column;
+}
+
 .form-login-control {
-  display: block;
+  //display: block;
+  margin-bottom: 1rem;
 }
 
 .form-login-submit {

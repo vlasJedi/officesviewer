@@ -1,4 +1,4 @@
-<div class="main-content-container" appOverlay>
+<div class="main-content-container">
   <header>
     <mat-toolbar>
       <mat-toolbar-row class="header-main-toolbar">
@@ -6,7 +6,7 @@
           <app-navigation [navItems]="getNavItems()"></app-navigation>
         </div>
         <div class="app-user-container">
-          <app-user-panel [username$]="getUsername$()"></app-user-panel>
+          <app-user-panel [user$]="getUsername$()"></app-user-panel>
         </div>
       </mat-toolbar-row>
     </mat-toolbar>

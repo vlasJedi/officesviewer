@@ -9,6 +9,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from "@angular/material/dialog";
 import { FormsModule } from "@angular/forms";
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from "@angular/material/form-field";
 
 @NgModule({
   declarations: [
@@ -26,7 +27,18 @@ import { FormsModule } from "@angular/forms";
       FormsModule
     ],
   providers: [
-    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {panelClass: "default-dialog-styles"}}
+    {
+      provide: MAT_DIALOG_DEFAULT_OPTIONS,
+      useValue: {
+        panelClass: "default-dialog-styles"
+      },
+    },
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: {
+        subscriptSizing: 'dynamic'
+      },
+    },
   ],
   bootstrap: [AppComponent]
 })

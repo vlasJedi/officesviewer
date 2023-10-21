@@ -16,6 +16,8 @@ export class CoreModuleConfig {
       new RestApiConfig(ApiUrls.LOGOUT, "/logout", "Logout"));
     this.REST_CONFIG.set(ApiUrls.USER,
       new RestApiConfig(ApiUrls.USER, "/user"));
+    this.REST_CONFIG.set(ApiUrls.ROLE,
+      new RestApiConfig(ApiUrls.ROLE, "/roles"));
     this.REST_CONFIG.set(ApiUrls.USERS,
       new RestApiConfig(ApiUrls.USERS, "/users", "Details"));
   }

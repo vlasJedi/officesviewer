@@ -3,6 +3,7 @@ export enum ApiUrls {
   LOGIN,
   LOGOUT,
   USER,
+  ROLE,
   USERS,
   NONE
 }

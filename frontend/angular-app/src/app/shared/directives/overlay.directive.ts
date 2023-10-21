@@ -20,19 +20,31 @@ export class OverlayDirective {
   }
   getStyle() {
     return {
-      "not-interactive": !this.isBackDropVisible
+      "not-interactive": this.isBackDropVisible
     };
   }
 
   onMouseWheel(event: Event) {
-    if (!this.isBackDropVisible) event.preventDefault();
+    if (this.isBackDropVisible) {
+      event.preventDefault();
+      return false;
+    }
+    return true;
   }
 
   onKey(event: KeyboardEvent) {
-    if ((event.code === "ArrowUp" || event.code === "ArrowDown") && !this.isBackDropVisible) event.preventDefault();
+    if ((event.code === "ArrowUp" || event.code === "ArrowDown") && this.isBackDropVisible) {
+      event.preventDefault();
+      return false;
+    }
+    return true;
   }
 
   onTouchMove(event: TouchEvent) {
-    if (!this.isBackDropVisible) event.preventDefault();
+    if (this.isBackDropVisible) {
+      event.preventDefault();
+      return false;
+    }
+    return true;
   }
 }
