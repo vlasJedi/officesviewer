@@ -1,26 +1,14 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import {
-  catchError,
-  concatMap,
-  first, forkJoin,
-  Observable,
-  of,
-  OperatorFunction,
-  Subject,
-  Subscription,
-  takeUntil,
-  throttleTime
-} from "rxjs";
+import { first, forkJoin, Observable, OperatorFunction, Subject, Subscription, takeUntil, throttleTime } from "rxjs";
 import { AuthenticationService } from "../../../core/services/authentication-service/authentication.service";
 import { Router } from "@angular/router";
 import { ConfigService } from "../../../core/services/config-service/config.service";
 import { ApiUrls } from "../../../core/enums/api-urls.enum";
 import { DialogService } from "../../../core/services/dialog-service/dialog.service";
 import { UserService } from "../../../core/services/user-service/user.service";
-import { AuthUserImpl } from "../../../core/models/auth-user.model";
 import { UserDetailsConfig, UserinfoformComponent } from "../forms/userinfoform/userinfoform.component";
-import { AppUser } from "../../../core/interfaces/user.interface";
-import { RoleModel, RoleService } from "../../../core/services/role-service/role.service";
+import { AppUser, UserRole } from "../../../core/interfaces/user.interface";
+import { RoleService } from "../../../core/services/role-service/role.service";
 
 @Component({
   selector: 'app-user-panel',
@@ -84,7 +72,7 @@ export class UserPanelComponent implements OnInit, OnDestroy {
       });
   }
 
-  private openUserDetails(authUser: AppUser, roles: RoleModel[]) {
+  private openUserDetails(authUser: AppUser, roles: UserRole[]) {
     this.dialogService.openAsComponent<UserinfoformComponent, UserDetailsConfig>(UserinfoformComponent, {
       matDialog: {
         data: {
