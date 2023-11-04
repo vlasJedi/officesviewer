@@ -3,7 +3,7 @@
     <mat-toolbar>
       <mat-toolbar-row class="header-main-toolbar">
         <div class="app-nav-container">
-          <app-navigation [navItems]="getNavItems()"></app-navigation>
+          <app-navigation [navItems]="getNavItems$() | async"></app-navigation>
         </div>
         <div class="app-user-container">
           <app-user-panel [user$]="getUsername$()"></app-user-panel>

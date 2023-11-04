@@ -1,5 +1,5 @@
-import { Component, Injectable, TemplateRef } from '@angular/core';
-import { DialogBoxComponent, DialogBoxInput } from "../../../shared/components/dialog-box/dialog-box.component";
+import { Injectable, TemplateRef } from '@angular/core';
+import { DialogBoxComponent, DialogBoxInput } from "../../../../shared/components/dialog-box/dialog-box.component";
 import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material/dialog";
 import { ComponentType } from "@angular/cdk/overlay";
 

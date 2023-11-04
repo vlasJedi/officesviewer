@@ -1,14 +1,14 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { first, forkJoin, Observable, OperatorFunction, Subject, Subscription, takeUntil, throttleTime } from "rxjs";
-import { AuthenticationService } from "../../../core/services/authentication-service/authentication.service";
+import { AuthenticationService } from "../../../core/services/api/authentication-service/authentication.service";
 import { Router } from "@angular/router";
-import { ConfigService } from "../../../core/services/config-service/config.service";
+import { ConfigService } from "../../../core/services/state/config-service/config.service";
 import { ApiUrls } from "../../../core/enums/api-urls.enum";
-import { DialogService } from "../../../core/services/dialog-service/dialog.service";
-import { UserService } from "../../../core/services/user-service/user.service";
+import { DialogService } from "../../../core/services/state/dialog-service/dialog.service";
+import { UserService } from "../../../core/services/api/user-service/user.service";
 import { UserDetailsConfig, UserinfoformComponent } from "../forms/userinfoform/userinfoform.component";
 import { AppUser, UserRole } from "../../../core/interfaces/user.interface";
-import { RoleService } from "../../../core/services/role-service/role.service";
+import { RoleService } from "../../../core/services/api/role-service/role.service";
 
 @Component({
   selector: 'app-user-panel',

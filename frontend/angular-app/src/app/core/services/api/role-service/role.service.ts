@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { AppUser, UserRole } from "../../interfaces/user.interface";
-import { ApiUrls } from "../../enums/api-urls.enum";
-import { ConfigService } from "../config-service/config.service";
+import { AppUser, UserRole } from "../../../interfaces/user.interface";
+import { ApiUrls } from "../../../enums/api-urls.enum";
+import { ConfigService } from "../../state/config-service/config.service";
 
 // export interface RoleModel {
 //   id: string;

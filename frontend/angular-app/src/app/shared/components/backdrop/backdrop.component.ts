@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {Observable} from "rxjs";
-import {BackdropService} from "../../../core/services/backdrop-service/backdrop.service";
+import {BackdropService} from "../../../core/services/state/backdrop-service/backdrop.service";
 
 @Component({
   selector: 'app-backdrop',

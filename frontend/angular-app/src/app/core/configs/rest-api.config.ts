@@ -1,4 +1,5 @@
-import {ApiUrls} from "../enums/api-urls.enum";
+import { ApiUrls } from "../enums/api-urls.enum";
+import { BehaviorSubject, Observable } from "rxjs";
 
 export class RestApiConfig {
 
@@ -6,7 +7,7 @@ export class RestApiConfig {
     private readonly _name: ApiUrls,
     private readonly _url = "",
     private readonly _displayName= "",
-    private readonly _partOfNavigation = false
+    public isVisible$: Observable<boolean> = new BehaviorSubject(true),
   ) {
   }
 
@@ -20,9 +21,5 @@ export class RestApiConfig {
 
   get displayName(): string {
     return this._displayName;
-  }
-
-  get partOfNavigation(): boolean {
-    return this._partOfNavigation;
   }
 }

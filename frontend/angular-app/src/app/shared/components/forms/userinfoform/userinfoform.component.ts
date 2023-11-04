@@ -2,8 +2,8 @@ import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { AppUser, UserRole } from "../../../../core/interfaces/user.interface";
-import { UserService } from "../../../../core/services/user-service/user.service";
-import { DialogService } from "../../../../core/services/dialog-service/dialog.service";
+import { UserService } from "../../../../core/services/api/user-service/user.service";
+import { DialogService } from "../../../../core/services/state/dialog-service/dialog.service";
 import { HttpErrorResponse } from "@angular/common/http";
 
 export interface UserDetailsConfig {
@@ -29,7 +29,7 @@ interface UserDetailsFormValue {
   username: string;
   firstName: string;
   secondName: string;
-  roles: string[];
+  roles: number[];
 }
 
 @Component({
@@ -88,7 +88,7 @@ export class UserinfoformComponent {
       secondName: currentForm.secondName,
       // definitely no undefined here so ignore this error
       // @ts-ignore
-      roles: currentForm.roles.map((roleId: string) => this.state.config?.data.roles
+      roles: currentForm.roles.map((roleId: number) => this.state.config?.data.roles
         .find((roleObj: UserRole) => roleObj.id === roleId))
     };
     this.userService.updateUserInfo(userInfo).subscribe({

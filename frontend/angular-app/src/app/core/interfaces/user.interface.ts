@@ -1,5 +1,5 @@
 export interface UserRole {
-  readonly id: string;
+  readonly id: number;
   readonly roleName: string;
 }
 export interface AppUser {

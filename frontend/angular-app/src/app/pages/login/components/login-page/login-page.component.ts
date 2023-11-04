@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthenticationService } from "src/app/core/services/authentication-service/authentication.service";
+import { AuthenticationService } from "src/app/core/services/api/authentication-service/authentication.service";
 import { Router } from "@angular/router";
-import { ConfigService } from "../../../../core/services/config-service/config.service";
+import { ConfigService } from "../../../../core/services/state/config-service/config.service";
 import { ApiUrls } from "../../../../core/enums/api-urls.enum";
 
 @Component({

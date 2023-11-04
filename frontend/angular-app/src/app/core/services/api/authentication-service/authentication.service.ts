@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { BehaviorSubject, catchError, Observable, of, tap } from "rxjs";
-import { ConfigService } from "../config-service/config.service";
-import { ApiUrls } from "../../enums/api-urls.enum";
-import { AppUser, AppUserImpl } from "../../interfaces/user.interface";
+import { BehaviorSubject, catchError, concatMap, first, map, Observable, of, switchMap, tap } from "rxjs";
+import { ConfigService } from "../../state/config-service/config.service";
+import { ApiUrls } from "../../../enums/api-urls.enum";
+import { AppUser, AppUserImpl } from "../../../interfaces/user.interface";
+import { RoleService } from "../role-service/role.service";
+import { ROLE } from "../../../configs/core-module.config";
 
 @Injectable({
   // provided as singleton in a root module
@@ -20,7 +22,7 @@ export class AuthenticationService {
 
   constructor(
     private readonly configService: ConfigService,
-    private readonly httpClient: HttpClient
+    private readonly httpClient: HttpClient,
   ) {
     this.getCurrentAuthUser().subscribe();
   }
@@ -62,5 +64,10 @@ export class AuthenticationService {
           this.authSubject.next(new AppUserImpl());
         })
       );
+  }
+
+  isCurrentUserAdmin$() {
+    return this.getCurrentUser$().pipe(
+      map(authUser => authUser.roles?.some(roleObj => roleObj.id === ROLE.ADMIN)));
   }
 }

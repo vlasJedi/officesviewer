@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import { adminPageGuard } from "./core/guards/admin-page/admin-page.guard";
 
 const routes: Routes = [
   {
@@ -9,6 +10,11 @@ const routes: Routes = [
   {
     path: "home",
     loadChildren: () => import('./pages/home-map/home-map.module').then(m => m.HomeMapModule)
+  },
+  {
+    path: "admin",
+    loadChildren: () => import('./pages/admin/admin.module').then(m => m.AdminModule),
+    canActivate: [adminPageGuard]
   },
   {
     path: "",
