@@ -2,9 +2,11 @@ import {Component} from '@angular/core';
 import {ConfigService} from "./core/services/state/config-service/config.service";
 import {RestApiConfig} from "./core/configs/rest-api.config";
 import {AuthenticationService} from "./core/services/api/authentication-service/authentication.service";
-import { catchError, map, Observable, of } from "rxjs";
-import { AppUser } from "./core/interfaces/user.interface";
-import { NavService } from "./core/services/state/nav-service/nav.service";
+import {Observable} from "rxjs";
+import {AppUser} from "./core/interfaces/user.interface";
+import {Select} from "@ngxs/store";
+import {NavSelectors} from "./core/services/state/nav-service/nav.selectors";
+import {NavItemModel} from "./core/services/state/nav-service/nav.model";
 
 @Component({
   selector: 'app-root',
@@ -13,11 +15,12 @@ import { NavService } from "./core/services/state/nav-service/nav.service";
 })
 export class AppComponent {
   readonly title = "Locations";
+  @Select(NavSelectors.navItems)
+  navItems$!: Observable<NavItemModel[]>;
 
   constructor(
     private readonly configService: ConfigService,
     private readonly authService: AuthenticationService,
-    private readonly navService: NavService,
   ) {
     // const srcList = [0, 1, 1, 2];
     // const listToExecute$ = of(...srcList);
@@ -49,10 +52,8 @@ export class AppComponent {
     //listToExecute$.pipe(timer(0, 2000), tap((val) => console.log(val))).subscribe(() => {});
   }
 
-  getNavItems$(): Observable<RestApiConfig[]> {
-    return this.navService.getAllNavItems$()
-      .pipe(
-        map(mapOfNav => Array.from(mapOfNav, ([k, v]) => v)));
+  getNavItems$(): Observable<NavItemModel[]> {
+    return this.navItems$;
   }
 
   getUsername$(): Observable<AppUser> {

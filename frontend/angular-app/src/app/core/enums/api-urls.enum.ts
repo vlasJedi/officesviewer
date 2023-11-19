@@ -1,10 +1,10 @@
 export enum ApiUrls {
-  HOME,
-  LOGIN,
-  ADMIN,
-  LOGOUT,
-  USER,
-  ROLE,
-  USERS,
-  NONE
+  HOME = "/home",
+  LOGIN = "/login",
+  ADMIN = "/admin",
+  LOGOUT = "/logout",
+  USER = "/user",
+  ROLE = "/roles",
+  USERS = "/users",
+  NONE = "NONE",
 }

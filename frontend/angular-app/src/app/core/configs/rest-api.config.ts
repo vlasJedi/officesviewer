@@ -7,7 +7,6 @@ export class RestApiConfig {
     private readonly _name: ApiUrls,
     private readonly _url = "",
     private readonly _displayName= "",
-    public isVisible$: Observable<boolean> = new BehaviorSubject(true),
   ) {
   }
 

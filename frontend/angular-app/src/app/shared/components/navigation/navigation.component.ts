@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { RestApiConfig } from "../../../core/configs/rest-api.config";
+import {Component, Input} from '@angular/core';
+import {NavItemModel} from "../../../core/services/state/nav-service/nav.model";
 
 @Component({
   selector: 'app-navigation',
@@ -8,13 +8,13 @@ import { RestApiConfig } from "../../../core/configs/rest-api.config";
 })
 export class NavigationComponent {
 
-  @Input() navItems: RestApiConfig[] | null = [];
+  @Input() navItems: NavItemModel[] | null = [];
 
-  getItems(): RestApiConfig[] | null {
+  getItems(): NavItemModel[] | null {
     return this.navItems;
   }
 
-  trackByFn(index: number, {url}: RestApiConfig) {
-    return url;
+  trackByFn(index: number, {data}: NavItemModel) {
+    return data.url;
   }
 }
