@@ -18,7 +18,7 @@ export class HttpinterceptorService implements HttpInterceptor{
             if (err.status === 401) {
               console.log("Caught that not authenticated");
             }
-            return of(new HttpResponse({status: 401}))
+            return of(new HttpResponse({status: 401}));
           })
       );
   }
