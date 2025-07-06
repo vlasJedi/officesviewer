@@ -1,11 +1,10 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { BehaviorSubject, catchError, concatMap, first, map, Observable, of, switchMap, tap } from "rxjs";
-import { ConfigService } from "../../state/config-service/config.service";
-import { ApiUrls } from "../../../enums/api-urls.enum";
-import { AppUser, AppUserImpl } from "../../../interfaces/user.interface";
-import { RoleService } from "../role-service/role.service";
-import { ROLE } from "../../../configs/core-module.config";
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {BehaviorSubject, catchError, map, Observable, of, tap} from "rxjs";
+import {ConfigService} from "../../state/config-service/config.service";
+import {ApiUrls} from "../../../enums/api-urls.enum";
+import {AppUser, AppUserImpl} from "../../../interfaces/user.interface";
+import {ROLE} from "../../../configs/core-module.config";
 
 @Injectable({
   // provided as singleton in a root module
@@ -24,12 +23,13 @@ export class AuthenticationService {
     private readonly configService: ConfigService,
     private readonly httpClient: HttpClient,
   ) {
-    this.getCurrentAuthUser().subscribe();
+    // this.getCurrentAuthUser().subscribe();
   }
 
-  getCurrentUser$(): Observable<AppUser> {
-    return this.authSubject.asObservable();
-  }
+  // will appear as selector
+  // getCurrentUser$(): Observable<AppUser> {
+  //   return this.authSubject.asObservable();
+  // }
 
   getCurrentAuthUser(): Observable<AppUser> {
     return this.httpClient.get<AppUser>(this.configService.getRestConfig(ApiUrls.USER).url)
@@ -37,8 +37,8 @@ export class AuthenticationService {
         catchError(() => of(new AppUserImpl())),
         // map(({username}: AuthUser = new AuthUserImpl()) => username),
         tap((value: AppUser) => {
-          console.debug(`Push new auth user: ${JSON.stringify(value)}`);
-          this.authSubject.next(value);
+          // console.debug(`Push new auth user: ${JSON.stringify(value)}`);
+          // this.authSubject.next(value);
         }));
   }
 
@@ -50,8 +50,8 @@ export class AuthenticationService {
     return this.httpClient.post<AppUser>(this.configService.getRestConfig(ApiUrls.LOGIN).url, urlParams.toString(), {headers})
       .pipe(
         tap((appUser) => {
-          console.debug(`Push new auth user: ${JSON.stringify(appUser)}`);
-          this.authSubject.next(appUser);
+          // console.debug(`Push new auth user: ${JSON.stringify(appUser)}`);
+          // this.authSubject.next(appUser);
         }));
   }
 
@@ -60,14 +60,15 @@ export class AuthenticationService {
       .post(this.configService.getRestConfig(ApiUrls.LOGOUT).url, undefined, {responseType: "text"})
       .pipe(
         tap(() => {
-          console.debug(`Push new auth user: ${JSON.stringify(new AppUserImpl())}`);
-          this.authSubject.next(new AppUserImpl());
+          // console.debug(`Push new auth user: ${JSON.stringify(new AppUserImpl())}`);
+          // this.authSubject.next(new AppUserImpl());
         })
       );
   }
 
-  isCurrentUserAdmin$() {
-    return this.getCurrentUser$().pipe(
-      map(authUser => authUser.roles?.some(roleObj => roleObj.id === ROLE.ADMIN)));
-  }
+  // as selector?
+  // isCurrentUserAdmin$() {
+  //   return this.getCurrentUser$().pipe(
+  //     map(authUser => authUser.roles?.some(roleObj => roleObj.id === ROLE.ADMIN)));
+  // }
 }
