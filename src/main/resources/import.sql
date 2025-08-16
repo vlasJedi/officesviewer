@@ -1,5 +1,5 @@
-INSERT INTO AppUser(username, first_name, second_name, password) VALUES ('admin', 'root', 'user', '$2a$10$1nUS18rEe0zT003WOplXm.pp3ZUp/Kwaan.zqq9fdWHvsuFfjk0WS');
-INSERT INTO AppUser(username, first_name, second_name, password) VALUES ('vlasJedi', 'Vlas', 'Dielov', '$2a$10$kCY1bfDcOlRVD./uBB9uieZRN3ohUNDXlNsjyMHDC7p3ae0iKudYi');
+INSERT INTO AppUser(username, first_name, second_name, password) VALUES ('admin', 'root', 'user', '$2a$10$7F8xRgr6HPaKsgZzfIccJeAw5rXMuTCLi1GcrZ82EZy6io73/Jr.y');
+INSERT INTO AppUser(username, first_name, second_name, password) VALUES ('vlasJedi', 'Vlas', 'Dielov', '$2a$10$7F8xRgr6HPaKsgZzfIccJeAw5rXMuTCLi1GcrZ82EZy6io73/Jr.y');
 
 INSERT INTO Role(role_name) VALUES ('ADMIN');
 INSERT INTO Role(role_name) VALUES ('USER');

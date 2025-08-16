@@ -20,13 +20,16 @@ import {AppUser, AppUserImpl} from "../../../interfaces/user.interface";
   providedIn: "root"
 })
 export class NavState implements NgxsOnInit {
-  @Select(AuthStateSelectors.currentlyAuthUser)
-  private readonly currentlyAuthUser: AppUser = new AppUserImpl();
+  // @Select(AuthStateSelectors.currentlyAuthUser)
+  private currentlyAuthUser: AppUser = new AppUserImpl();
 
   constructor(
     private readonly configService: ConfigService,
     private readonly authenticationService: AuthenticationService,
   ) {
+    authenticationService.getCurrentUser$().subscribe(authUser => {
+      this.currentlyAuthUser = authUser;
+    });
   }
   ngxsOnInit(ctx: StateContext<NavStateModel>): void {
     this.authenticationService.isCurrentUserAdmin$().subscribe(isAdmin => {

@@ -29,6 +29,7 @@ public class AppAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String inputPassword = authentication.getCredentials().toString();
         String username = authentication.getPrincipal().toString();
+        String afterEncode = passwordEncoder.encode("test");
         if (inputPassword.isEmpty() || username.isEmpty()) throw new BadCredentialsException("Bad credentials");
         AppUserDetails userDetails = (AppUserDetails) userDetailsService.loadUserByUsername(username);
         if (!passwordEncoder.matches(inputPassword, userDetails.getPassword()))

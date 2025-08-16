@@ -23,13 +23,13 @@ export class AuthenticationService {
     private readonly configService: ConfigService,
     private readonly httpClient: HttpClient,
   ) {
-    // this.getCurrentAuthUser().subscribe();
+    this.getCurrentAuthUser().subscribe();
   }
 
   // will appear as selector
-  // getCurrentUser$(): Observable<AppUser> {
-  //   return this.authSubject.asObservable();
-  // }
+  getCurrentUser$(): Observable<AppUser> {
+    return this.authSubject.asObservable();
+  }
 
   getCurrentAuthUser(): Observable<AppUser> {
     return this.httpClient.get<AppUser>(this.configService.getRestConfig(ApiUrls.USER).url)
@@ -38,7 +38,7 @@ export class AuthenticationService {
         // map(({username}: AuthUser = new AuthUserImpl()) => username),
         tap((value: AppUser) => {
           // console.debug(`Push new auth user: ${JSON.stringify(value)}`);
-          // this.authSubject.next(value);
+          this.authSubject.next(value);
         }));
   }
 
@@ -51,7 +51,7 @@ export class AuthenticationService {
       .pipe(
         tap((appUser) => {
           // console.debug(`Push new auth user: ${JSON.stringify(appUser)}`);
-          // this.authSubject.next(appUser);
+          this.authSubject.next(appUser);
         }));
   }
 
@@ -61,14 +61,14 @@ export class AuthenticationService {
       .pipe(
         tap(() => {
           // console.debug(`Push new auth user: ${JSON.stringify(new AppUserImpl())}`);
-          // this.authSubject.next(new AppUserImpl());
+          this.authSubject.next(new AppUserImpl());
         })
       );
   }
 
   // as selector?
-  // isCurrentUserAdmin$() {
-  //   return this.getCurrentUser$().pipe(
-  //     map(authUser => authUser.roles?.some(roleObj => roleObj.id === ROLE.ADMIN)));
-  // }
+  isCurrentUserAdmin$() {
+    return this.getCurrentUser$().pipe(
+      map(authUser => authUser.roles?.some(roleObj => roleObj.id === ROLE.ADMIN)));
+  }
 }
