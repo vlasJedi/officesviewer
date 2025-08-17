@@ -35,9 +35,11 @@ public class SecurityConfig {
         // building from most specific down to most general
         httpSecurity.authorizeHttpRequests((requests) -> requests
             // pay attention that ** and * are different, * will work only one segment of urlpath, ** is recursive
-            .requestMatchers("/admin/**")
+            .requestMatchers("/api/admin/**")
             .hasRole(RoleEnum.ADMIN.toString())
-            .requestMatchers("/api/**", "/users/**")
+            .requestMatchers("/api/login/**")
+            .permitAll()
+            .requestMatchers("/api/**")
             .authenticated()
             .requestMatchers("/**")
             .permitAll()
@@ -46,19 +48,19 @@ public class SecurityConfig {
             // then this formLogin consumes a POST auth requests coming to /login URL
             // therefore works two auth mechanisms: HTTP Basic vs Session based POST /login
             // need to choose one of them
-            .formLogin().loginPage("/login")
+//            .formLogin().loginPage("/login")
             // prevent redirects from spring so this is done by client code
-            .successHandler((request, response, authentication) -> {
-                response.setStatus(HttpServletResponse.SC_OK);
-                AppUser user = ((AppUserDetails) appUserService.loadUserByUsername(authentication.getName())).getUser();
-                ObjectMapper mapper = new ObjectMapper();
-                response.getOutputStream().print(mapper.writeValueAsString(user));
-            })
+//            .successHandler((request, response, authentication) -> {
+//                response.setStatus(HttpServletResponse.SC_OK);
+//                AppUser user = ((AppUserDetails) appUserService.loadUserByUsername(authentication.getName())).getUser();
+//                ObjectMapper mapper = new ObjectMapper();
+//                response.getOutputStream().print(mapper.writeValueAsString(user));
+//            })
             // prevent redirects from spring so this is done by client code
-            .failureHandler(((request, response, exception) -> {
-                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            }))
-            .and()
+//            .failureHandler(((request, response, exception) -> {
+//                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+//            }))
+//            .and()
             .logout((logoutConfigurer) -> logoutConfigurer.logoutSuccessHandler(((request, response, authentication) -> {
                 response.setStatus(HttpServletResponse.SC_OK);
             })))

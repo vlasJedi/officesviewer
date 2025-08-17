@@ -1,7 +1,0 @@
-<ul class="navigation-class">
-  <ng-container *ngFor="let item of getItems(); trackBy: trackByFn">
-    <li *ngIf="item.isVisible" class="navigation-item">
-        <a routerLink="{{item.data.url}}">{{item.data.displayName}}</a>
-    </li>
-  </ng-container>
-</ul>

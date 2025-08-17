@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 // @Service designed to be stateless
@@ -30,21 +32,21 @@ public class AppUserService implements UserDetailsService {
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // build template object to match against
-        ExampleMatcher matcher = ExampleMatcher.matching()
-                .withIgnorePaths("id", "firstName", "secondName")
-                .withMatcher("username", (genericPropertyMatcher) -> {
-                    genericPropertyMatcher.stringMatcher(ExampleMatcher.StringMatcher.EXACT);
-                });
-        AppUser appUserToFind = new AppUser();
-        appUserToFind.setUsername(username);
+//        ExampleMatcher matcher = ExampleMatcher.matching()
+//                .withIgnorePaths("id", "firstName", "secondName")
+//                .withMatcher("username", (genericPropertyMatcher) -> {
+//                    genericPropertyMatcher.stringMatcher(ExampleMatcher.StringMatcher.EXACT);
+//                });
+//        AppUser appUserToFind = new AppUser();
+//        appUserToFind.setUsername(username);
         // find by example
-        Optional<AppUser> userOpt = userRepository.findOne(Example.of(appUserToFind, matcher));
-        if (userOpt.isEmpty()) throw new UsernameNotFoundException("Username not found");
+        AppUser user = userRepository.findAppUserByUsername(username).stream().findFirst().orElse(null);
+        if (Objects.isNull(user)) throw new UsernameNotFoundException("Username not found");
         // force fetch of roles as they are lazy loaded and currently is opened transaction
         // so entity of user is NOT in detached state
         // REFACTOR FOR SPRING APPROACH
-        userOpt.get().getRoles().size();
-        return new AppUserDetails(userOpt.get());
+        user.getRoles().size();
+        return new AppUserDetails(user);
     }
 
     @Transactional
